@@ -16,6 +16,7 @@ def get_base_data(url):
     df = pd.read_html(url)[0]
     df = df.rename(columns={'Symbol': 'Ticker'})
     
+    print(f"Fetched {len(df)} rows from {url}")
     return df
 
 def create_schema(df):
@@ -34,6 +35,8 @@ def create_schema(df):
             schema.append(bigquery.SchemaField(col, 'INTEGER'))
         else:
             schema.append(bigquery.SchemaField(col, 'STRING'))
+    
+    print(f"Created schema with {len(schema)} fields.")
     return schema
 
 def calculate_annualized_returns(ticker_symbol, df_input, period="5y"):
