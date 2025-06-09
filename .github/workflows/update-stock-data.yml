@@ -10,4 +10,6 @@ jobs:
       - name: Check out the repository to the runner
         uses: actions/checkout@v4  
       - name: Run a script
-        run: ./src/update_stock_data.py
+        run: chmod +x update_stock_data.py
+      - name: Execute the script
+        run: ./update_stock_data.py
