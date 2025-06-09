@@ -57,7 +57,22 @@ def calculate_annualized_returns(ticker_symbol, df_input, period="5y"):
         hist['Year'] = hist['Date'].dt.year
         current_year = hist['Year'].max()    
 
+        # Pct from all time high
+        all_time_high = hist['Close'].max()
+        df_input.loc[df_input['Ticker'] == ticker_symbol, 'Pct_From_All_Time_High'] = np.round(((hist['Close'].iloc[-1] - all_time_high) / all_time_high) * 100, 2)
         
+        # 24 Hour Change
+        hist['24_Hour_Change'] = hist['Close'].pct_change(periods=1) * 100
+        df_input.loc[df_input['Ticker'] == ticker_symbol, '24_Hour_Change'] = np.round(hist['24_Hour_Change'].iloc[-1], 2)
+
+        # 7 day Change
+        hist['7_Day_Change'] = hist['Close'].pct_change(periods=7) * 100
+        df_input.loc[df_input['Ticker'] == ticker_symbol, '7_Day_Change'] = np.round(hist['7_Day_Change'].iloc[-1], 2)
+
+        # 30 Day Change
+        hist['30_Day_Change'] = hist['Close'].pct_change(periods=30) * 100
+        df_input.loc[df_input['Ticker'] == ticker_symbol, '30_Day_Change'] = np.round(hist['30_Day_Change'].iloc[-1], 2)
+
         # average annualized return
         annualized_return = ((hist['Close'].iloc[-1] / hist['Close'].iloc[0]) ** (1 / (current_year - hist['Year'].min())) - 1) * 100
         df_input.loc[df_input['Ticker'] == ticker_symbol, 'Annualized_Return'] = np.round(annualized_return, 2)
@@ -73,18 +88,6 @@ def calculate_annualized_returns(ticker_symbol, df_input, period="5y"):
         
         # Get market cap
         df_input.loc[df_input['Ticker'] == ticker_symbol, 'Market_Cap'] = ticker.info.get('marketCap', np.nan)
-        
-        # 24 Hour Change
-        hist['24_Hour_Change'] = hist['Close'].pct_change(periods=1) * 100
-        df_input.loc[df_input['Ticker'] == ticker_symbol, '24_Hour_Change'] = np.round(hist['24_Hour_Change'].iloc[-1], 2)
-
-        # 7 day Change
-        hist['7_Day_Change'] = hist['Close'].pct_change(periods=7) * 100
-        df_input.loc[df_input['Ticker'] == ticker_symbol, '7_Day_Change'] = np.round(hist['7_Day_Change'].iloc[-1], 2)
-
-        # 30 Day Change
-        hist['30_Day_Change'] = hist['Close'].pct_change(periods=30) * 100
-        df_input.loc[df_input['Ticker'] == ticker_symbol, '30_Day_Change'] = np.round(hist['30_Day_Change'].iloc[-1], 2)
         
         # Calculate 200 Day Moving Average & Pct Difference from it
         hist['200_MA'] = hist['Close'].rolling(window=200).mean()

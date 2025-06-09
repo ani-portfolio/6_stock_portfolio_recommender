@@ -1,4 +1,7 @@
-on: push
+on:
+  schedule:
+    # daily at 5pm EST every weekday
+    - cron: '0 21 * * 1-5'
 
 jobs:
   build:
@@ -15,8 +18,8 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0'
+        uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY_DEV }}'
+          credentials_json: '${{ secrets.RECOMMENDATION_APP_GCP_SA_KEY_DEV }}'
       - name: Execute the script
         run: python3 src/update_stock_data.py
