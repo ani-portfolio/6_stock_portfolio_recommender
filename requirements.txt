@@ -80,7 +80,6 @@ google-resumable-media==2.7.2
 googleapis-common-protos==1.70.0
 greenlet==3.2.3
 grpcio==1.72.1
-grpcio-status==1.72.1
 gunicorn==23.0.0
 h11==0.16.0
 h5py==3.13.0
@@ -181,7 +180,7 @@ posthog==4.2.0
 prompt_toolkit==3.0.51
 propcache==0.3.1
 proto-plus==1.26.1
-protobuf==4.21.5
+protobuf==5.26.0
 psutil==7.0.0
 ptyprocess==0.7.0
 pure_eval==0.2.3
