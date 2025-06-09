@@ -1,10 +1,11 @@
 on:
   schedule:
-    # daily at 5pm EST every weekday
-    - cron: '0 21 * * 1-5'
+    # daily at 9.30pm UTC every weekday
+    - cron: '30 21 * * 1-5'
 
 jobs:
   build:
+    name: Update Stock Data
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repository to the runner
