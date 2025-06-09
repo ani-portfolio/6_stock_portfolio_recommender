@@ -10,4 +10,4 @@ jobs:
       - name: Check out the repository to the runner
         uses: actions/checkout@v4  
       - name: Run a script
-        run: update_stock_data.py
+        run: ./src/update_stock_data.py
