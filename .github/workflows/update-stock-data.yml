@@ -1,9 +1,11 @@
-# on:
-#   schedule:
-#     # daily at 9.30pm UTC every weekday
-#     - cron: '30 20 * * 1-5'
+on:
+  schedule:
+    - cron: '30 20 * * 1-5'
+  workflow_dispatch: # Allows manual triggering of the workflow
+name: Update Stock Data Workflow
+# This workflow updates stock data by running a Python script daily at midnight UTC.
 
-on: push
+
 
 jobs:
   build:
