@@ -1,7 +1,7 @@
 from datetime import datetime
 from google.cloud import bigquery
 
-from data_ingestion import *
+from functions.data_ingestion import *
 from parameters import dataset_id, table_id, period
 
 # Fetch base data from the URL

@@ -1,7 +1,7 @@
 on:
   schedule:
     # daily at 9.30pm UTC every weekday
-    - cron: '30 21 * * 1-5'
+    - cron: '30 20 * * 1-5'
 
 jobs:
   build:
@@ -23,4 +23,4 @@ jobs:
         with:
           credentials_json: '${{ secrets.RECOMMENDATION_APP_GCP_SA_KEY_DEV }}'
       - name: Execute the script
-        run: python3 src/update_stock_data.py
+        run: python3 scripts/update_stock_data.py

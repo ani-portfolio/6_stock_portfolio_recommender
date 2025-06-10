@@ -3,6 +3,7 @@ from google.cloud.exceptions import NotFound
 import yfinance as yf
 import pandas as pd
 import numpy as np
+import pandas_gbq
 
 
 def get_base_data(url):
@@ -14,7 +15,7 @@ def get_base_data(url):
     """
     
     df = pd.read_html(url)[0]
-    df = df.rename(columns={'Symbol': 'Ticker'})
+    df = df.rename(columns={'Symbol': 'Ticker', 'Security': 'Company_Name'})
     
     print(f"Fetched {len(df)} rows from {url}")
     return df
@@ -143,3 +144,10 @@ def save_table_to_bigquery(df, dataset_id, table_id):
     # Insert the DataFrame into the BigQuery table
     job = client.load_table_from_dataframe(df, table_ref)
     job.result()  # Wait for the job to complete
+
+def load_table_from_bigquery(dataset_id, table_id, project_id):
+    """Load a table from BigQuery."""
+
+    query = f"SELECT * FROM `{dataset_id}.{table_id}`"
+    df = pandas_gbq.read_gbq(query, project_id=project_id)
+    return df

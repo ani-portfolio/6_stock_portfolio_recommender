@@ -1,9 +1,12 @@
+# Virtual environment
 .venv/
 
+# Python cache files
 .DS_Store
+/src/__pycache__/
 
+# Sample data files
 data/
 
+# Vector database files
 chroma_db/
-
-/google-cloud-sdk
