@@ -7,7 +7,7 @@ env:
   REGION: us-central1 
   SERVICE_NAME: stock-recommendation-app 
   IMAGE_REPO_NAME: stock-recommendation-app-repo
-  IMAGE_NAME: "${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.IMAGE_REPO_NAME }}/${{ env.SERVICE_NAME }}"
+  IMAGE_NAME: $REGION-docker.pkg.dev/$PROJECT_ID/$IMAGE_REPO_NAME/$SERVICE_NAME
 
 jobs:
   deploy:
@@ -42,7 +42,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: ${{ env.SERVICE_NAME }}
-          image: ${{ env.IMAGE_NAME }}:latest
+          image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.IMAGE_REPO_NAME }}/${{ env.SERVICE_NAME }}:latest
           region: ${{ env.REGION }}
           allow_unauthenticated: true # Set to false if you want to restrict access
           port: 8080 # Streamlit's default port
