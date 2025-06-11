@@ -19,9 +19,5 @@ ENV PORT 8080
 EXPOSE $PORT
 
 # Command to run the Streamlit application
-# Streamlit will automatically pick up the PORT environment variable set by Cloud Run
-CMD ["streamlit", "run", "app.py", "--server.port", "8080", "--server.enable-cors", "false", "--server.enable-xsrf", "false"]
-
-
-
-
+# Corrected Streamlit flags for CORS and XSRF protection
+CMD ["streamlit", "run", "app.py", "--server.port", "8080", "--server.enableCORS", "false", "--server.enableXsrfProtection", "false"]
