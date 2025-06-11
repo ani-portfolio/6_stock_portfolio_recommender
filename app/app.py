@@ -1,8 +1,8 @@
 import streamlit as st
 
-from scripts.functions.data_ingestion import *
-from scripts.parameters import *
-from scripts.functions.rag_helper import *
+from data_ingestion import *
+from parameters import *
+from rag_helper import *
 
 # --- Streamlit App UI ---
 st.set_page_config(page_title="Local Stock RAG App", layout="centered")
