@@ -7,7 +7,7 @@ env:
   REGION: us-central1 # Replace with your desired GCP region (e.g., us-central1)
   SERVICE_NAME: stock-recommendation-app # Must match the SERVICE_NAME used in manual steps
   IMAGE_REPO_NAME: stock-recommendation-app-repo # Must match the repo name from manual steps
-  IMAGE_NAME: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.IMAGE_REPO_NAME }}/${{ env.SERVICE_NAME }}
+  IMAGE_NAME: $REGION-docker.pkg.dev/$PROJECT_ID/$IMAGE_REPO_NAME/$SERVICE_NAME
 
 jobs:
   deploy:
