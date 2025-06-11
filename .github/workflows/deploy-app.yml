@@ -49,4 +49,5 @@ jobs:
           port: 8080 # Streamlit's default port
 
       - name: Show Cloud Run URL
-        run: echo "🚀 Streamlit app deployed to: ${{ steps.deploy.outputs.url }}"
+        run: |
+          echo "🚀 Streamlit app deployed to: ${{ steps.deploy.outputs.url }}"
