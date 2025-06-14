@@ -35,6 +35,5 @@ jobs:
       - name: Prefect Deploy
         env:
           PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
-          PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
         run: |
           python scripts/update_stock_data.py
