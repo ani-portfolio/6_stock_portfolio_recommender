@@ -34,6 +34,7 @@ if __name__ == "__main__":
     main.deploy(
         name="update-stock-data-bigquery",
         work_pool_name="default-work-pool",
-        image="prefecthq/prefect-client:3-python3.11",
-        interval=21600
+        image="anizehrs/ani-docker:latest",
+        interval=21600,
+        push=True
     )
