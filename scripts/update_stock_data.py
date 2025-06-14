@@ -31,9 +31,11 @@ def main():
     update_stock_data()
 
 if __name__ == "__main__":
-    main.deploy(
+    main.from_source(
+        source="https://github.com/ani-portfolio/6_stock_portfolio_recommender.git",
+        entrypoint="scripts/update_stock_data.py:main",
+    ).deploy(
         name="update-stock-data-bigquery",
         work_pool_name="default-work-pool",
-        image="prefecthq/prefect-client:3-latest",
-        interval=21600,
+        interval=21600
     )
