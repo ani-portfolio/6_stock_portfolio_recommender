@@ -33,7 +33,7 @@ if __name__ == "__main__":
     # Deploy the flow using the new method
     main.from_source(
         source="https://github.com/ani-portfolio/6_stock_portfolio_recommender.git",
-        entrypoint="scripts/update_stock_data.py:main",
+        entrypoint="update_stock_data.py:main",
     ).deploy(
         name="update-stock-data-bigquery",
         work_pool_name="default-work-pool",
@@ -42,4 +42,5 @@ if __name__ == "__main__":
         tags=["stock-data", "bigquery"],
         description="Updates stock data in BigQuery every 6 hours",
         version="1.0.0",
+        path="scripts",  # Specify the path within the repo
     )
