@@ -1,4 +1,4 @@
-name: Update Stock Data in GCP BigQuery
+name: Update Stock Data in GCP BigQuery via Prefect
 
 on: 'push'
 
@@ -21,10 +21,10 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: '${{ secrets.RECOMMENDATION_APP_GCP_SA_KEY_DEV }}'
-      - name: Prefect Auth
+      - name: Authenticate to Prefect
         uses: PrefectHQ/actions-prefect-auth@v1
         with:
           prefect-api-key: ${{ secrets.PREFECT_API_KEY }}
           prefect-workspace: ${{ secrets.PREFECT_API_URL }}
-      - name: Prefect Deploy
+      - name: Deploy to Prefect
         run: prefect deployment build ./scripts/update_stock_data.py:main
