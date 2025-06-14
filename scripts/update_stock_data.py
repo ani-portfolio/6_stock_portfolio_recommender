@@ -1,7 +1,5 @@
 # deploy_stock_update.py
-from prefect import flow, task, deploy
-from prefect.deployments import Deployment
-from prefect.runner.storage import GitRepository
+from prefect import flow, task
 
 from datetime import datetime
 from google.cloud import bigquery
