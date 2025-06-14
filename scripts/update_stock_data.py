@@ -39,5 +39,5 @@ if __name__ == "__main__":
     main.deploy(
         name="update-stock-data-bigquery",
         work_pool_name="default-work-pool",
-        image="anizehrs/ani-docker:update-stock-data",
+        image="anizehrs/ani-docker:latest",
     )
