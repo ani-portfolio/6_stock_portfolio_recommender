@@ -37,4 +37,4 @@ jobs:
           PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
           PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
         run: |
-          python update_stock_data.py
+          python scripts/update_stock_data.py
