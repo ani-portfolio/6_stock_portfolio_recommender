@@ -30,13 +30,38 @@ def main():
     update_stock_data()
 
 if __name__ == "__main__":
-    # Deploy without from_source - let the work pool handle code execution
-    main.deploy(
+    # First, delete any existing deployment with the same name
+    try:
+        from prefect.client import get_client
+        import asyncio
+        
+        async def delete_existing():
+            client = get_client()
+            deployments = await client.read_deployments(
+                name="update-stock-data-bigquery"
+            )
+            for deployment in deployments:
+                await client.delete_deployment(deployment.id)
+                print(f"Deleted existing deployment: {deployment.name}")
+        
+        asyncio.run(delete_existing())
+    except:
+        pass  # No existing deployment
+    
+    # Deploy with GitHub source - ensure it's properly stored
+    deployment = main.from_source(
+        source="https://github.com/ani-portfolio/6_stock_portfolio_recommender.git",
+        entrypoint="scripts/update_stock_data.py:main",
+    ).deploy(
         name="update-stock-data-bigquery",
         work_pool_name="default-work-pool",
         cron="0 */6 * * *",  # Run every 6 hours
         tags=["stock-data", "bigquery"],
         description="Updates stock data in BigQuery every 6 hours",
-        image="prefecthq/prefect:2-python3.11",  # Specify a base image
-        build=False,  # Don't build a new image
+        version="1.0.0",
+        build=False,
     )
+    
+    print(f"Deployment created successfully!")
+    print(f"Source: https://github.com/ani-portfolio/6_stock_portfolio_recommender.git")
+    print(f"Entrypoint: scripts/update_stock_data.py:main")
