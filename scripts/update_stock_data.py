@@ -1,8 +1,8 @@
 from prefect import flow, task
 from datetime import datetime
 
-from scripts.functions.data_ingestion import *
-from scripts.parameters import dataset_id, table_id, period
+from functions.data_ingestion import *
+from parameters import dataset_id, table_id, period
 
 @task
 def update_stock_data():
