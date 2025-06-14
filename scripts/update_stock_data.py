@@ -1,5 +1,5 @@
 # deploy_stock_update.py
-from prefect import flow, task
+from prefect import flow, task, deploy
 from prefect.deployments import Deployment
 from prefect.runner.storage import GitRepository
 
@@ -31,11 +31,13 @@ def update_stock_data():
 
     return f"Successfully Update Stock Data in BigQuery {datetime.now().strftime('%Y-%m-%d')}"
 
-@flow(name="stock-portfolio-update")
+@flow(log_prints=True)
 def main():
-    result = update_stock_data()
-    print(result)
-    return result
+    update_stock_data()
 
 if __name__ == "__main__":
-    main()
+    main.deploy(
+        name="update-stock-data-bigquery",
+        work_pool_name="default-work-pool",
+        image="anizehrs/ani-docker:update-stock-data",
+    )
