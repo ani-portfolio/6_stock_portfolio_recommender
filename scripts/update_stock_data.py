@@ -1,4 +1,7 @@
+# deploy_stock_update.py
 from prefect import flow, task
+from prefect.deployments import Deployment
+from prefect.runner.storage import GitRepository
 
 from datetime import datetime
 from google.cloud import bigquery
@@ -8,7 +11,7 @@ from parameters import dataset_id, table_id, period
 
 @task
 def update_stock_data():
-# Fetch base data from the URL
+    # Fetch base data from the URL
     df_sp500 = get_base_data('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
     df_sp500 = df_sp500.head(20)
 
@@ -28,9 +31,11 @@ def update_stock_data():
 
     return f"Successfully Update Stock Data in BigQuery {datetime.now().strftime('%Y-%m-%d')}"
 
-@flow
+@flow(name="stock-portfolio-update")
 def main():
-    update_stock_data()
+    result = update_stock_data()
+    print(result)
+    return result
 
 if __name__ == "__main__":
     main()
