@@ -26,5 +26,4 @@ jobs:
           PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
           PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
         run: |
-          pip install -r requirements.txt
           prefect deploy --all --prefect-file prefect.yaml

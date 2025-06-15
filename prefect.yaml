@@ -8,11 +8,16 @@ build: null
 # Push section - no push needed since code is on GitHub
 push: null
 
-# Pull section - clone from GitHub when running
+# Pull section - clone from GitHub and install dependencies
 pull:
   - prefect.deployments.steps.git_clone:
+      id: clone-step
       repository: https://github.com/ani-portfolio/6_stock_portfolio_recommender.git
       branch: feature/prefect
+  - prefect.deployments.steps.pip_install_requirements:
+      requirements_file: requirements.txt
+      directory: "{{ clone-step.directory }}"
+      stream_output: false
 
 # Define deployments
 deployments:
@@ -24,12 +29,9 @@ deployments:
     description: Updates stock data in BigQuery every 6 hours
     schedule:
       cron: "0 */6 * * *"
-      timezone: "EST"
+      timezone: "UTC"
     entrypoint: scripts/update_stock_data.py:main
     work_pool:
       name: default-work-pool
-      job_variables:
-        env:
-          # These will be resolved from Prefect Secrets at runtime
-          GOOGLE_APPLICATION_CREDENTIALS_JSON: "{{ prefect.blocks.secret.recommendation-app-gcp-sa-key-dev }}"
+      job_variables: {}
     parameters: {}
