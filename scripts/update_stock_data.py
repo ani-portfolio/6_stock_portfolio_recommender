@@ -19,12 +19,12 @@ def setup_gcp_credentials():
         secret_block = Secret.load("recommendation-app-gcp-sa-key-dev")
         credentials_json = secret_block.get()
         
-        # Parse the JSON string
-        credentials_dict = json.loads(credentials_json)
+        # # Parse the JSON string
+        # credentials_dict = json.loads(credentials_json)
         
         # Create credentials object for BigQuery
         credentials = service_account.Credentials.from_service_account_info(
-            credentials_dict,
+            credentials_json,
             scopes=["https://www.googleapis.com/auth/bigquery"]
         )
         
