@@ -1,15 +1,23 @@
 
 
-# BigQuery parameters
-project_id="capable-arbor-293714"
+# GCP Parameters
 staging_dataset = "stock_data"
 location = "US"
-url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
+project_id="capable-arbor-293714"
 dataset_id = 'stock_data'
-table_id = 'stock_data_updated_via_github_actions'
+table_id = 'stock_data'
+
+# Data Processing Parameters
+base_data_url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
 period = "5y"
 
-# Streamlit local app parameters
-persist_directory = "/Users/ani/Projects/6_stock_portfolio_recommendation/chroma_db" # Directory to store ChromaDB
-embedding_model = "all-MiniLM-L6-v2" # Sentence Transformers model
-llm_model = "mistral" # Ensure this model is pulled in Ollama (ollama pull mistral)
+# Secret Key Name 
+prefect_gcp_service_account_key = "recommendation-app-gcp-sa-key-dev"  # Prefect Secret name for GCP credentials
+prefect_pinecone_api_key = "recommendation-app-pinecone-api-key"
+
+# Pinecone Parameters
+huggingface_embeddings_model = "sentence-transformers/all-MiniLM-L6-v2"
+pinecone_index_name = "stock-recommendation-app-index"
+
+# Groq Parameters
+groq_llm_model = "llama-3.3-70b-versatile"

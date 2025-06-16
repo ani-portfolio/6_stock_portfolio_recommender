@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 import pandas_gbq
 
-
 def get_base_data(url):
     """Fetches base data from a given URL and returns it as a DataFrame.
     Args:
@@ -15,7 +14,9 @@ def get_base_data(url):
     """
     
     df = pd.read_html(url)[0]
-    df = df.rename(columns={'Symbol': 'Ticker', 'Security': 'Company_Name'})
+    df = df.rename(columns={'Symbol': 'Ticker', 'Security': 'Company_Name', 'GICS Sector': 'Sector', 'GICS Sub-Industry': 'Industry', 'Founded': 'Founded_Year'}).drop(['Date added', 'CIK'], axis=1)
+    df.columns = df.columns.str.replace(' ', '_').str.replace('/', '_').str.replace('-', '_')
+    df['Ticker'] = df['Ticker'].str.upper()
     
     print(f"Fetched {len(df)} rows from {url}")
     return df
@@ -125,7 +126,7 @@ def calculate_annualized_returns(ticker_symbol, df_input, period="5y"):
     
     except Exception as e:
         print(f"Error processing {ticker_symbol}: {e}")
-        return df_input
+        return df_input.sort_values('Market_Cap', ascending=False)
 
 def save_table_to_bigquery(df, dataset_id, table_id):
     client = bigquery.Client()
