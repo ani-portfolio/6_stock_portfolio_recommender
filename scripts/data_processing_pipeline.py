@@ -183,7 +183,6 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name):
 def get_stock_data(url):
     """Update stock data with explicit credentials"""
     df_sp500 = get_base_data(url)
-    df_sp500 = df_sp500.head()
 
     for ticker in df_sp500['Ticker'].unique().tolist():
         df_sp500 = calculate_annualized_returns(ticker_symbol=ticker, df_input=df_sp500, period=period)
