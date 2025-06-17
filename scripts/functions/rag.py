@@ -6,6 +6,23 @@ import plotly.graph_objects as go
 from datetime import datetime
 import os
 
+def get_api_key(key_name: str) -> str:
+    """
+    Get API key from environment variables or Streamlit secrets
+    Prioritizes environment variables for Cloud Run compatibility
+    """
+    # First try environment variables (works in Cloud Run)
+    env_value = os.getenv(key_name)
+    if env_value:
+        return env_value
+    
+    # Fallback to Streamlit secrets (local development)
+    try:
+        return st.secrets.get(key_name, "")
+    except Exception:
+        # If st.secrets fails (e.g., no secrets.toml), return empty string
+        return ""
+    
 def initialize_rag_components(pinecone_api: str, 
                               groq_api: str, 
                               groq_llm_model: str, 
