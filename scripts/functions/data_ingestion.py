@@ -120,7 +120,7 @@ def calculate_annualized_returns(ticker_symbol, df_input, period="5y"):
         df_input.loc[df_input['Ticker'] == ticker_symbol, 'Beta'] = np.round(beta, 2)
 
         # Years since founded
-        df_input.loc[df_input['Ticker'] == ticker_symbol, 'Years_Since_Founded'] = current_year - int(df_input[df_input['Ticker'] == ticker_symbol]['Founded'].max()[:4])
+        df_input.loc[df_input['Ticker'] == ticker_symbol, 'Years_Since_Founded'] = current_year - int(df_input[df_input['Ticker'] == ticker_symbol]['Founded_Year'].max()[:4])
 
         return df_input
     

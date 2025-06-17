@@ -124,7 +124,7 @@ def create_embeddings_with_model(chunks, embeddings_model):
         raise
 
 @task
-def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name):
+def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existing):
     """Save vector embeddings to Pinecone with metadata and page content"""
     
     try:
@@ -144,7 +144,13 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name):
             print("Index created successfully")
         
         index = pc.Index(index_name)
-        
+
+        # Clear existing data if requested (recommended for stock data)
+        if clear_existing:
+            print("Clearing existing data from index...")
+            index.delete(delete_all=True)
+            print("Index cleared successfully")
+
         vectors = []
         for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
             vector_id = f"{chunk.metadata.get('Ticker', 'unknown')}_{i}_{chunk.metadata.get('Update_Date', '')}"
@@ -233,7 +239,7 @@ def data_processing_flow():
     embeddings = create_embeddings_with_model(chunks, embeddings_model)
     
     print("Saving embeddings to Pinecone")
-    pinecone_result = save_embeddings_to_pinecone(pc, chunks, embeddings, pinecone_index_name)
+    pinecone_result = save_embeddings_to_pinecone(pc, chunks, embeddings, pinecone_index_name, clear_existing)
 
     print("Enhanced Data Processing Pipeline Completed Successfully")
     print(f"BigQuery: {bigquery_result}")

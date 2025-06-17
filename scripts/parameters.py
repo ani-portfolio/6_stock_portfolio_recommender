@@ -18,6 +18,7 @@ prefect_pinecone_api_key = "recommendation-app-pinecone-api-key"
 # Pinecone Parameters
 huggingface_embeddings_model = "sentence-transformers/all-MiniLM-L6-v2"
 pinecone_index_name = "stock-recommendation-app-index"
+clear_existing = True
 
 # Groq Parameters
 groq_llm_model = "llama-3.3-70b-versatile"
