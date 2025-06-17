@@ -3,7 +3,7 @@ name: Deploy Data Processing Pipeline (Prefect Flow)
 on: 
   push:
     branches:
-      - feature/pinecone
+      - dev
   workflow_dispatch:
 
 jobs:

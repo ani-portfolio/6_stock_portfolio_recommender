@@ -12,7 +12,7 @@ pull:
   - prefect.deployments.steps.git_clone:
       id: clone-step
       repository: https://github.com/ani-portfolio/6_stock_portfolio_recommender.git
-      branch: feature/pinecone
+      branch: dev
   - prefect.deployments.steps.pip_install_requirements:
       requirements_file: requirements.txt
       directory: "{{ clone-step.directory }}"
@@ -20,13 +20,13 @@ pull:
 
 # Define deployments
 deployments:
-  - name: data-processing-pipeline-test-3
+  - name: data-processing-pipeline
     version: 1.0.0
     tags:
       - stock-data
       - bigquery
       - pinecone
-    flow_name: data-processing-pipeline-test-3
+    flow_name: data-processing-pipeline
     description: Updates stock data in BigQuery & saves embeddings in Pinecone (5PM EST Every Weekday)
     schedule:
       cron: "0 17 * * 1-5"
