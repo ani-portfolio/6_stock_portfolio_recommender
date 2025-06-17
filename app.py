@@ -9,6 +9,8 @@ import os
 from scripts.parameters import *
 from scripts.functions.rag import *
 
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 # --- Streamlit App Configuration ---
 st.set_page_config(
     page_title="Stock Portfolio RAG Assistant", 
@@ -23,22 +25,22 @@ st.markdown("""
 Ask natural language questions about stocks and get insights from our comprehensive financial database.
 """)
 
-# --- Sidebar Configuration ---
-with st.sidebar:
-    st.header("⚙️ Configuration")
+# # --- Sidebar Configuration ---
+# with st.sidebar:
+#     st.header("⚙️ Configuration")
     
-    # API Key Configuration
-    st.subheader("API Keys")
-    with st.expander("Configure API Keys"):
-        st.info("Set your API keys in Streamlit secrets or environment variables:")
-        st.code("""
-# In .streamlit/secrets.toml
-PINECONE_API_KEY = "your_pinecone_key"
-GROQ_API_KEY = "your_groq_key"
-        """)
+#     # API Key Configuration
+#     st.subheader("API Keys")
+#     with st.expander("Configure API Keys"):
+#         st.info("Set your API keys in Streamlit secrets or environment variables:")
+#         st.code("""
+# # In .streamlit/secrets.toml
+# PINECONE_API_KEY = "your_pinecone_key"
+# GROQ_API_KEY = "your_groq_key"
+#         """)
     
     # Model Configuration
-    st.subheader("Model Settings")
+    # st.subheader("Model Settings")
     
     # # Allow user to specify index name
     # pinecone_index_name = st.text_input(
@@ -47,55 +49,54 @@ GROQ_API_KEY = "your_groq_key"
     #     help="Enter the name of your Pinecone index"
     # )
     
-    top_k = st.slider("Number of similar stocks to retrieve", 1, 10, 5)
-    show_context = st.checkbox("Show retrieved context", value=True)
+    # top_k = st.slider("Number of similar stocks to retrieve", 1, 10, 5)
     
-    # Check Pinecone connection
-    if st.button("🔍 Check Pinecone Connection"):
-        try:
-            from pinecone import Pinecone
-            pinecone_api = get_api_key("PINECONE_API_KEY")
-            if pinecone_api:
-                pc = Pinecone(api_key=pinecone_api)
-                available_indexes = pc.list_indexes()
-                index_names = [idx.name for idx in available_indexes] if available_indexes else []
+    # # Check Pinecone connection
+    # if st.button("🔍 Check Pinecone Connection"):
+    #     try:
+    #         from pinecone import Pinecone
+    #         pinecone_api = get_api_key("PINECONE_API_KEY")
+    #         if pinecone_api:
+    #             pc = Pinecone(api_key=pinecone_api)
+    #             available_indexes = pc.list_indexes()
+    #             index_names = [idx.name for idx in available_indexes] if available_indexes else []
                 
-                if index_names:
-                    st.success(f"✅ Found {len(index_names)} indexes:")
-                    for name in index_names:
-                        st.write(f"- {name}")
-                else:
-                    st.warning("⚠️ No indexes found in your Pinecone project")
-            else:
-                st.error("❌ Pinecone API key not found")
-        except Exception as e:
-            st.error(f"❌ Connection failed: {e}")
+    #             if index_names:
+    #                 st.success(f"✅ Found {len(index_names)} indexes:")
+    #                 for name in index_names:
+    #                     st.write(f"- {name}")
+    #             else:
+    #                 st.warning("⚠️ No indexes found in your Pinecone project")
+    #         else:
+    #             st.error("❌ Pinecone API key not found")
+    #     except Exception as e:
+    #         st.error(f"❌ Connection failed: {e}")
     
-    # System Status
-    st.subheader("System Status")
-    pinecone_key = get_api_key("PINECONE_API_KEY")
-    groq_key = get_api_key("GROQ_API_KEY")
+    # # System Status
+    # st.subheader("System Status")
+    # pinecone_key = get_api_key("PINECONE_API_KEY")
+    # groq_key = get_api_key("GROQ_API_KEY")
     
-    pinecone_status = "🟢 Ready" if pinecone_key else "🔴 Missing API Key"
-    groq_status = "🟢 Ready" if groq_key else "🔴 Missing API Key"
+    # pinecone_status = "🟢 Ready" if pinecone_key else "🔴 Missing API Key"
+    # groq_status = "🟢 Ready" if groq_key else "🔴 Missing API Key"
     
-    st.write(f"**Pinecone:** {pinecone_status}")
-    st.write(f"**Groq LLM:** {groq_status}")
+    # st.write(f"**Pinecone:** {pinecone_status}")
+    # st.write(f"**Groq LLM:** {groq_status}")
     
-    # Show environment info for debugging
-    if st.checkbox("Show Debug Info"):
-        st.write("**Environment Variables:**")
-        st.write(f"- PINECONE_API_KEY: {'✅ Set' if os.getenv('PINECONE_API_KEY') else '❌ Not set'}")
-        st.write(f"- GROQ_API_KEY: {'✅ Set' if os.getenv('GROQ_API_KEY') else '❌ Not set'}")
+    # # Show environment info for debugging
+    # if st.checkbox("Show Debug Info"):
+    #     st.write("**Environment Variables:**")
+    #     st.write(f"- PINECONE_API_KEY: {'✅ Set' if os.getenv('PINECONE_API_KEY') else '❌ Not set'}")
+    #     st.write(f"- GROQ_API_KEY: {'✅ Set' if os.getenv('GROQ_API_KEY') else '❌ Not set'}")
         
-        st.write("**Streamlit Secrets:**")
-        try:
-            pinecone_secret = st.secrets.get("PINECONE_API_KEY", "")
-            groq_secret = st.secrets.get("GROQ_API_KEY", "")
-            st.write(f"- PINECONE_API_KEY: {'✅ Set' if pinecone_secret else '❌ Not set'}")
-            st.write(f"- GROQ_API_KEY: {'✅ Set' if groq_secret else '❌ Not set'}")
-        except Exception as e:
-            st.write(f"- Secrets not accessible: {e}")
+    #     st.write("**Streamlit Secrets:**")
+    #     try:
+    #         pinecone_secret = st.secrets.get("PINECONE_API_KEY", "")
+    #         groq_secret = st.secrets.get("GROQ_API_KEY", "")
+    #         st.write(f"- PINECONE_API_KEY: {'✅ Set' if pinecone_secret else '❌ Not set'}")
+    #         st.write(f"- GROQ_API_KEY: {'✅ Set' if groq_secret else '❌ Not set'}")
+    #     except Exception as e:
+    #         st.write(f"- Secrets not accessible: {e}")
 
 # --- Session State Management ---
 if 'selected_query' not in st.session_state:
@@ -135,7 +136,7 @@ if user_query and (search_button or user_query):
             index_name = pinecone_index_name
             
             # Perform RAG query
-            response = rag_query_stocks(query=user_query, top_k=top_k, groq_llm_model=groq_llm_model,
+            response = rag_query_stocks(query=user_query, top_k=1, groq_llm_model=groq_llm_model,
                                         huggingface_embeddings_model=huggingface_embeddings_model,
                                         pinecone_index_name=index_name)
             
@@ -148,16 +149,17 @@ if user_query and (search_button or user_query):
                     st.subheader("🎯 Investment Insights")
                     st.markdown(response['answer'])
                 
-                # Metrics
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric("Sources Found", response['num_sources'])
-                with col2:
-                    st.metric("Query Type", "RAG Analysis")
-                with col3:
-                    st.metric("Status", "Success")
+                # # Metrics
+                # col1, col2, col3 = st.columns(3)
+                # with col1:
+                #     st.metric("Sources Found", response['num_sources'])
+                # with col2:
+                #     st.metric("Query Type", "RAG Analysis")
+                # with col3:
+                #     st.metric("Status", "Success")
                 
                 # Show context if enabled
+                show_context = st.checkbox("Show retrieved context", value=True)
                 if show_context and response['context']:
                     st.divider()
                     display_stock_cards(response['context'])

@@ -22,7 +22,7 @@ def get_api_key(key_name: str) -> str:
     except Exception:
         # If st.secrets fails (e.g., no secrets.toml), return empty string
         return ""
-    
+
 def initialize_rag_components(pinecone_api: str, 
                               groq_api: str, 
                               groq_llm_model: str, 
