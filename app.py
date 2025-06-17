@@ -44,9 +44,9 @@ GROQ_API_KEY = "your_groq_key"
     
     # System Status
     st.subheader("System Status")
-    pinecone_status = "🟢 Ready" if st.secrets.get("PINECONE_API_KEY") else "🔴 Missing API Key"
-    groq_status = "🟢 Ready" if st.secrets.get("GROQ_API_KEY") else "🔴 Missing API Key"
-    
+    pinecone_status = "🟢 Ready" if st.secrets.get("PINECONE_API_KEY")  or os.getenv("PINECONE_API_KEY") else "🔴 Missing API Key"
+    groq_status = "🟢 Ready" if st.secrets.get("GROQ_API_KEY")  or os.getenv("GROQ_API_KEY") else "🔴 Missing API Key"
+
     st.write(f"**Pinecone:** {pinecone_status}")
     st.write(f"**Groq LLM:** {groq_status}")
 
