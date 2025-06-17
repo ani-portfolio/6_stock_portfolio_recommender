@@ -135,7 +135,9 @@ if user_query and (search_button or user_query):
             index_name = pinecone_index_name if 'pinecone_index_name' in locals() else "stock-portfolio-rag"
             
             # Perform RAG query
-            response = rag_query_stocks(user_query, top_k=top_k, pinecone_index_name=index_name)
+            response = rag_query_stocks(query=user_query, top_k=top_k, groq_llm_model=groq_llm_model,
+                                        huggingface_embeddings_model=huggingface_embeddings_model,
+                                        pinecone_index_name=index_name)
             
             if response['success']:
                 # Display main answer
