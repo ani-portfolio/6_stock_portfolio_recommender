@@ -10,3 +10,6 @@ data/
 
 # Vector database files
 chroma_db/
+
+# streamlit secrets
+.secrets.toml
