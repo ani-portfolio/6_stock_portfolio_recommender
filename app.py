@@ -40,12 +40,12 @@ GROQ_API_KEY = "your_groq_key"
     # Model Configuration
     st.subheader("Model Settings")
     
-    # Allow user to specify index name
-    pinecone_index_name = st.text_input(
-        "Pinecone Index Name", 
-        value="stock-portfolio-rag",
-        help="Enter the name of your Pinecone index"
-    )
+    # # Allow user to specify index name
+    # pinecone_index_name = st.text_input(
+    #     "Pinecone Index Name", 
+    #     value="stock-portfolio-rag",
+    #     help="Enter the name of your Pinecone index"
+    # )
     
     top_k = st.slider("Number of similar stocks to retrieve", 1, 10, 5)
     show_context = st.checkbox("Show retrieved context", value=True)
@@ -132,7 +132,7 @@ if user_query and (search_button or user_query):
     with st.spinner("🔍 Analyzing stock data..."):
         try:
             # Get the pinecone index name from sidebar
-            index_name = pinecone_index_name if 'pinecone_index_name' in locals() else "stock-portfolio-rag"
+            index_name = pinecone_index_name
             
             # Perform RAG query
             response = rag_query_stocks(query=user_query, top_k=top_k, groq_llm_model=groq_llm_model,
