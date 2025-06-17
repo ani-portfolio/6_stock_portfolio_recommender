@@ -125,10 +125,9 @@ def create_embeddings_with_model(chunks, embeddings_model):
 
 @task
 def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existing):
-    """Save vector embeddings to Pinecone with optional clearing strategy"""
+    """Save vector embeddings to Pinecone with metadata and page content"""
     
     try:
-        # Check if index exists, create if not
         existing_indexes = pc.list_indexes().names()
         
         if index_name not in existing_indexes:
@@ -144,28 +143,26 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
             )
             print("Index created successfully")
         
-        # Get index
         index = pc.Index(index_name)
-        
+
         # Clear existing data if requested (recommended for stock data)
         if clear_existing:
             print("Clearing existing data from index...")
             index.delete(delete_all=True)
             print("Index cleared successfully")
-        
-        # Prepare vectors for upsert
+
         vectors = []
         for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
-            vector_id = f"{chunk.metadata.get('ticker', 'unknown')}_{i}_{chunk.metadata.get('update_date', '')}"
+            vector_id = f"{chunk.metadata.get('Ticker', 'unknown')}_{i}_{chunk.metadata.get('Update_Date', '')}"
             
             metadata = {
-                'ticker': chunk.metadata.get('ticker'),
-                'company_name': chunk.metadata.get('company_name'),
-                'sector': chunk.metadata.get('sector'),
-                'industry': chunk.metadata.get('industry'),
-                'update_date': chunk.metadata.get('update_date'),
-                'document_type': chunk.metadata.get('document_type', 'stock_data'),
+                'Ticker': chunk.metadata.get('Ticker'),
+                'Company_Name': chunk.metadata.get('Company_Name'),
+                'Sector': chunk.metadata.get('Sector'),
+                'Industry': chunk.metadata.get('Industry'),
+
                 'content': chunk.page_content,
+                
                 'chunk_index': i
             }
             
@@ -175,7 +172,6 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
                 "metadata": metadata
             })
         
-        # Upsert vectors in batches
         batch_size = 100
         for i in range(0, len(vectors), batch_size):
             batch = vectors[i:i + batch_size]
