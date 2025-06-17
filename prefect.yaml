@@ -20,13 +20,13 @@ pull:
 
 # Define deployments
 deployments:
-  - name: data-processing-pipeline-test-2
+  - name: data-processing-pipeline-test-3
     version: 1.0.0
     tags:
       - stock-data
       - bigquery
       - pinecone
-    flow_name: data-processing-pipeline-test-2
+    flow_name: data-processing-pipeline-test-3
     description: Updates stock data in BigQuery & saves embeddings in Pinecone (5PM EST Every Weekday)
     schedule:
       cron: "0 17 * * 1-5"
