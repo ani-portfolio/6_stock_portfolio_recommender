@@ -184,7 +184,7 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
     except Exception as e:
         print(f"Failed to save embeddings to Pinecone: {str(e)}")
         raise
-    
+
 @task
 def get_stock_data(url):
     """Update stock data with explicit credentials"""
