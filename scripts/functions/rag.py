@@ -63,11 +63,10 @@ def retrieve_relevant_context(query: str, index, embeddings, top_k: int = 5) -> 
                 'score': match.score,
                 'content': match.metadata.get('content', 'Content not available'),
                 'metadata': {
-                    'ticker': match.metadata.get('ticker'),
-                    'company_name': match.metadata.get('company_name'),
-                    'sector': match.metadata.get('sector'),
-                    'industry': match.metadata.get('industry'),
-                    'update_date': match.metadata.get('update_date')
+                    'Ticker': match.metadata.get('Ticker'),
+                    'Company_Name': match.metadata.get('Company_Name'),
+                    'Sector': match.metadata.get('Sector'),
+                    'Industry': match.metadata.get('Industry'),
                 },
                 'id': match.id
             })
@@ -120,7 +119,7 @@ ANSWER:
         input_variables=["context", "question"]
     )
 
-def rag_query_stocks(query: str, top_k: int = 5) -> Dict[str, Any]:
+def rag_query_stocks(query, top_k, groq_llm_model, huggingface_embeddings_model, pinecone_index_name):
     """Enhanced RAG function using stored page content"""
     
     try:
@@ -129,11 +128,7 @@ def rag_query_stocks(query: str, top_k: int = 5) -> Dict[str, Any]:
         # Get API keys from environment or Streamlit secrets
         pinecone_api = st.secrets.get("PINECONE_API_KEY") or os.getenv("PINECONE_API_KEY")
         groq_api = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
-        
-        # Configuration parameters
-        groq_llm_model = "mixtral-8x7b-32768"
-        huggingface_embeddings_model = "sentence-transformers/all-MiniLM-L6-v2"
-        pinecone_index_name = "stock-portfolio-rag"
+
         
         # Initialize components
         index, llm, embeddings = initialize_rag_components(
@@ -206,15 +201,14 @@ def display_stock_cards(retrieved_docs: List[Dict]):
     for i, doc in enumerate(retrieved_docs):
         metadata = doc['metadata']
         
-        with st.expander(f"{metadata.get('company_name', 'Unknown')} ({metadata.get('ticker', 'N/A')}) - Relevance: {doc['score']:.3f}"):
+        with st.expander(f"{metadata.get('Company_Name', 'Unknown')} ({metadata.get('Ticker', 'N/A')})"):
             col1, col2 = st.columns(2)
             
             with col1:
-                st.write(f"**Sector:** {metadata.get('sector', 'N/A')}")
-                st.write(f"**Industry:** {metadata.get('industry', 'N/A')}")
-            
+                st.write(f"**Sector:** {metadata.get('Sector', 'N/A')}")
+                st.write(f"**Industry:** {metadata.get('Industry', 'N/A')}")
+
             with col2:
-                st.write(f"**Last Update:** {metadata.get('update_date', 'N/A')}")
                 st.write(f"**Relevance Score:** {doc['score']:.3f}")
             
             st.write("**Full Content:**")
@@ -238,5 +232,5 @@ def create_sample_queries():
     for i, query in enumerate(sample_queries):
         col = cols[i % 2]
         if col.button(query, key=f"sample_{i}"):
-            st.session_state.user_input = query
+            st.session_state.selected_query = query
             st.rerun()
