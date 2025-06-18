@@ -159,10 +159,10 @@ if user_query and (search_button or user_query):
                 #     st.metric("Status", "Success")
                 
                 # Show context if enabled
-                show_context = st.checkbox("Show retrieved context", value=True)
-                if show_context and response['context']:
-                    st.divider()
-                    display_stock_cards(response['context'])
+                # show_context = st.checkbox("Show retrieved context", value=True)
+                # if show_context and response['context']:
+                st.divider()
+                display_stock_cards(response['context'])
                 
             else:
                 st.error("❌ Analysis Failed")
