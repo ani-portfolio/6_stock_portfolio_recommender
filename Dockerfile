@@ -24,4 +24,4 @@ EXPOSE $PORT
 
 # Command to run the Streamlit application
 # Updated Streamlit flags for Cloud Run compatibility
-CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]
+CMD ["streamlit", "run", "app.py", "--server.port", "8080", "--server.enableCORS", "false", "--server.enableXsrfProtection", "false"]
