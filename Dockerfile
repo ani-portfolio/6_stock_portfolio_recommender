@@ -10,14 +10,19 @@ COPY requirements.txt .
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of your application code into the container
-COPY . .
+# Copy all application files into the container
+COPY app.py .
+COPY scripts/ ./scripts/
+
+# Set proper permissions
+RUN chmod -R 755 /app
 
 # Expose the port that Streamlit will listen on
 # Cloud Run automatically sets the PORT environment variable
 ENV PORT 8080
 EXPOSE $PORT
 
+
 # Command to run the Streamlit application
-# Corrected Streamlit flags for CORS and XSRF protection
-CMD ["streamlit", "run", "app.py", "--server.port", "8080", "--server.enableCORS", "false", "--server.enableXsrfProtection", "false"]
+# Updated Streamlit flags for Cloud Run compatibility
+CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]
