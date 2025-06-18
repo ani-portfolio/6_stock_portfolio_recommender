@@ -10,6 +10,9 @@ COPY requirements.txt .
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Pre-download HuggingFace model to avoid runtime download issues
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
+
 # Copy all application files into the container
 COPY app.py .
 COPY scripts/ ./scripts/
@@ -22,4 +25,4 @@ EXPOSE $PORT
 
 # Command to run the Streamlit application
 # Updated Streamlit flags for Cloud Run compatibility
-CMD ["streamlit", "run", "app.py", "--server.port", "8080", "--server.enableCORS", "false", "--server.enableXsrfProtection", "false"]
+CMD ["streamlit", "run", "app.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.enableCORS=false", "--server.enableXsrfProtection=false"]
