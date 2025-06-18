@@ -1,1 +1,1 @@
-# 6_stock_portfolio_recommender
+# Stock Portfolio Recommendation Project

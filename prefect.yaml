@@ -1,0 +1,38 @@
+name: Stock Recommender Data Processing Pipeline
+prefect-version: 3.4.6
+
+# Build section - no build needed for Python flows
+build: null
+
+# Push section - no push needed since code is on GitHub
+push: null
+
+# Pull section - clone from GitHub and install dependencies
+pull:
+  - prefect.deployments.steps.git_clone:
+      id: clone-step
+      repository: https://github.com/ani-portfolio/6_stock_portfolio_recommender.git
+      branch: main
+  - prefect.deployments.steps.pip_install_requirements:
+      requirements_file: requirements.txt
+      directory: "{{ clone-step.directory }}"
+      stream_output: false
+
+# Define deployments
+deployments:
+  - name: data-processing-pipeline
+    version: 1.0.0
+    tags:
+      - stock-data
+      - bigquery
+      - pinecone
+    flow_name: data-processing-pipeline
+    description: Updates stock data in BigQuery & saves embeddings in Pinecone (5PM EST Every Weekday)
+    schedule:
+      cron: "0 17 * * 1-5"
+      timezone: "EST"
+    entrypoint: scripts/data_processing_pipeline.py:data_processing_flow
+    work_pool:
+      name: default-work-pool
+      job_variables: {}
+    parameters: {}
