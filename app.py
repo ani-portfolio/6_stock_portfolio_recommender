@@ -84,8 +84,8 @@ GROQ_API_KEY = "your_groq_key"
         
         st.write("**Streamlit Secrets:**")
         try:
-            pinecone_secret = st.secrets.get("PINECONE_API_KEY", "")
-            groq_secret = st.secrets.get("GROQ_API_KEY", "")
+            pinecone_secret = get_api_key("PINECONE_API_KEY")
+            groq_secret = get_api_key("GROQ_API_KEY")
             st.write(f"- PINECONE_API_KEY: {'✅ Set' if pinecone_secret else '❌ Not set'}")
             st.write(f"- GROQ_API_KEY: {'✅ Set' if groq_secret else '❌ Not set'}")
         except Exception as e:
