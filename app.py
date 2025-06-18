@@ -42,13 +42,6 @@ GROQ_API_KEY = "your_groq_key"
     # Model Configuration
     st.subheader("Model Settings")
     
-    # # Allow user to specify index name
-    # pinecone_index_name = st.text_input(
-    #     "Pinecone Index Name", 
-    #     value="stock-portfolio-rag",
-    #     help="Enter the name of your Pinecone index"
-    # )
-    
     top_k = st.slider("Number of similar stocks to retrieve", 1, 10, 5)
     
     # Check Pinecone connection

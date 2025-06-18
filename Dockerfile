@@ -13,6 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy all application files into the container
 COPY app.py .
 COPY scripts/ ./scripts/
+COPY .streamlit/ .streamlit/
 
 # Expose the port that Streamlit will listen on
 # Cloud Run automatically sets the PORT environment variable
