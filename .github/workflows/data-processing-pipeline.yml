@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 name: Data Processing Pipeline (Prefect Flow)
-=======
-name: Deploy Data Processing Pipeline (Prefect Flow)
->>>>>>> dev
 
 on: 
   push:
