@@ -14,9 +14,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app.py .
 COPY scripts/ ./scripts/
 
-# Set proper permissions
-RUN chmod -R 755 /app
-
 # Expose the port that Streamlit will listen on
 # Cloud Run automatically sets the PORT environment variable
 ENV PORT 8080
