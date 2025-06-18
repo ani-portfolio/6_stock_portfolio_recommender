@@ -1,4 +1,4 @@
-name: Deploy Data Processing Pipeline (Prefect Flow)
+name: Data Processing Pipeline (Prefect Flow)
 
 on: 
   push:

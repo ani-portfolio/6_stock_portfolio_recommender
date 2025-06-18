@@ -46,6 +46,9 @@ jobs:
           region: ${{ env.REGION }}
           allow_unauthenticated: true # Set to false if you want to restrict access
           port: 8080 # Streamlit's default port
+          # Increase memory limit for ML models
+          memory: 2Gi
+          cpu: 1
           # Environment variables for API keys
           env_vars: |
             PINECONE_API_KEY=${{ secrets.PINECONE_API_KEY }}
