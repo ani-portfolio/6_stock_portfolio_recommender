@@ -129,7 +129,7 @@ if user_query and (search_button or user_query):
             index_name = pinecone_index_name
             
             # Perform RAG query
-            response = rag_query_stocks(query=user_query, top_k=1, groq_llm_model=groq_llm_model,
+            response = rag_query_stocks(query=user_query, top_k=top_k, groq_llm_model=groq_llm_model,
                                         huggingface_embeddings_model=huggingface_embeddings_model,
                                         pinecone_index_name=index_name)
             

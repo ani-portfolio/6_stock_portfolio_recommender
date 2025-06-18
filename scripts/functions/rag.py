@@ -235,11 +235,11 @@ def create_sample_queries():
     """Create sample query buttons for users"""
     
     sample_queries = [
-        "What are the best performing tech stocks?",
+        "What is NVIDIA's annualized return?",
         "Show me dividend-paying stocks with low volatility",
-        "Which stocks have the highest annualized returns?",
-        "Tell me about NVIDIA's performance",
-        "Compare healthcare vs technology sector stocks",
+        "Which stocks have the highest annualized returns in 2024?",
+        "What is Apple's return in 2024?",
+        "Find stocks with a P/E ratio below 20 and annualized return above 10%",
         "Find undervalued stocks trading below their 52-week high"
     ]
     
