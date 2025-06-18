@@ -143,8 +143,8 @@ def rag_query_stocks(query, top_k, groq_llm_model, huggingface_embeddings_model,
         print(f"Query: {query}")
         
         # Get API keys from environment or Streamlit secrets
-        pinecone_api = st.secrets.get("PINECONE_API_KEY") or os.getenv("PINECONE_API_KEY")
-        groq_api = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
+        pinecone_api = get_api_key("PINECONE_API_KEY")
+        groq_api = get_api_key("GROQ_API_KEY")
 
         
         # Initialize components
