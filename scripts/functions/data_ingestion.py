@@ -128,23 +128,23 @@ def calculate_annualized_returns(ticker_symbol, df_input, period="5y"):
         print(f"Error processing {ticker_symbol}: {e}")
         return df_input.sort_values('Market_Cap', ascending=False)
 
-def save_table_to_bigquery(df, dataset_id, table_id):
-    client = bigquery.Client()
-    table_ref = client.dataset(dataset_id).table(table_id)
+# def save_table_to_bigquery(df, dataset_id, table_id):
+#     client = bigquery.Client()
+#     table_ref = client.dataset(dataset_id).table(table_id)
     
-    # If the table does not exist, create it
-    try:
-        client.get_table(table_ref)
-        print(f"Table {table_id} already exists in dataset {dataset_id}.")
-    except NotFound:
-        schema = create_schema(df)
-        table = bigquery.Table(table_ref, schema=schema)
-        table = client.create_table(table)
-    print(f"Table {table_id} created in dataset {dataset_id}.")
+#     # If the table does not exist, create it
+#     try:
+#         client.get_table(table_ref)
+#         print(f"Table {table_id} already exists in dataset {dataset_id}.")
+#     except NotFound:
+#         schema = create_schema(df)
+#         table = bigquery.Table(table_ref, schema=schema)
+#         table = client.create_table(table)
+#     print(f"Table {table_id} created in dataset {dataset_id}.")
     
-    # Insert the DataFrame into the BigQuery table
-    job = client.load_table_from_dataframe(df, table_ref)
-    job.result()  # Wait for the job to complete
+#     # Insert the DataFrame into the BigQuery table
+#     job = client.load_table_from_dataframe(df, table_ref)
+#     job.result()  # Wait for the job to complete
 
 def load_table_from_bigquery(dataset_id, table_id, project_id):
     """Load a table from BigQuery."""

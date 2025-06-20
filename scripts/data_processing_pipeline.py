@@ -130,6 +130,12 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
     try:
         existing_indexes = pc.list_indexes().names()
         
+        # Clear existing data if requested (recommended for stock data)
+        if index_name in existing_indexes and clear_existing:
+            print("Clearing existing data from index...")
+            index.delete(delete_all=True)
+            print("Index cleared successfully")
+
         if index_name not in existing_indexes:
             print(f"Creating new Pinecone index: {index_name}")
             pc.create_index(
@@ -144,12 +150,6 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
             print("Index created successfully")
         
         index = pc.Index(index_name)
-
-        # Clear existing data if requested (recommended for stock data)
-        if clear_existing:
-            print("Clearing existing data from index...")
-            index.delete(delete_all=True)
-            print("Index cleared successfully")
 
         vectors = []
         for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
