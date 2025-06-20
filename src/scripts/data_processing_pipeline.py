@@ -10,7 +10,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 
-from functions.data_ingestion import *
+from utils.data_ingestion import *
 from parameters import *
 
 @task

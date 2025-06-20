@@ -6,8 +6,8 @@ import plotly.graph_objects as go
 from datetime import datetime
 import os
 
-from scripts.parameters import *
-from scripts.functions.rag import *
+from src.parameters import *
+from src.utils.rag import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
