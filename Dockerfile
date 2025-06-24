@@ -15,7 +15,7 @@ RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTr
 
 # Copy all application files into the container
 COPY app.py .
-COPY scripts/ ./scripts/
+COPY src/scripts/ ./src/scripts/
 COPY pages/ ./pages/
 COPY media/ .media/
 

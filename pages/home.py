@@ -10,7 +10,7 @@ import os
 import sys
 sys.path.append('..')
 from src.parameters import *
-from src.utils.rag import *
+from src.rag import *
 
 # --- Header ---
 # st.title("STOCK RECOMMENDATION SYSTEM")

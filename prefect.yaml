@@ -27,7 +27,7 @@ deployments:
     schedule:
       cron: "0 17 * * 1-5"
       timezone: "EST"
-    entrypoint: scripts/data_processing_pipeline.py:data_processing_flow
+    entrypoint: src/data_processing_pipeline.py:data_processing_flow
     work_pool:
       name: default-work-pool
       job_variables: {}
