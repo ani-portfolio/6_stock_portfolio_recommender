@@ -3,14 +3,14 @@ from prefect.blocks.system import Secret
 from google.oauth2 import service_account
 from datetime import datetime
 import pandas as pd
+from tqdm import tqdm
 
 from google.cloud import bigquery
 from pinecone import Pinecone, ServerlessSpec
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 
-from functions.data_ingestion import *
+from data_ingestion import *
 from parameters import *
 
 @task
@@ -70,37 +70,30 @@ def connect_to_huggingface_embeddings(huggingface_embeddings_model):
 
 @task
 def create_text_chunks(df):
-    """Create text chunks from stock data for embedding"""
+    """Create exactly one text chunk per stock row"""
     
     try:
-        documents = []
-        columns = df.columns.tolist()
+        chunks = []
         
+        # Convert each stock record to a single chunk
         for _, row in df.iterrows():
             doc_content = ""
-            for col in columns:
+            for col in df.columns:
                 if pd.notna(row[col]):
                     doc_content += f"{col}: {row[col]}\n"
             
+            # Create metadata for each document
             metadata = {
                 "Ticker": row['Ticker'],
                 "Company_Name": row['Company_Name'], 
-                "Sector": row['Sector'],
-                "Industry": row['Industry'],
+                "Sector": row['Sector'] if pd.notna(row['Sector']) else None,
+                "Industry": row['Industry'] if pd.notna(row['Industry']) else None,
             }
 
-            documents.append(Document(page_content=doc_content.strip(), metadata=metadata))
+            chunk = Document(page_content=doc_content.strip(), metadata=metadata)
+            chunks.append(chunk)
         
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200,
-            length_function=len,
-            separators=["\n\n", "\n", " ", ""]  
-        )
-        
-        chunks = text_splitter.split_documents(documents)
-
-        print(f"Created {len(chunks)} chunks from {len(df)} stock records")
+        print(f"Created {len(chunks)} chunks from {len(df)} stock records (1:1 ratio)")
         return chunks
 
     except Exception as e:
@@ -112,8 +105,10 @@ def create_embeddings_with_model(chunks, embeddings_model):
     """Create embeddings for text chunks using the embedding model"""
     
     try:
+        # Extract text content from chunks
         texts = [chunk.page_content for chunk in chunks]
         
+        # Create embeddings
         embeddings = embeddings_model.embed_documents(texts)
 
         print(f"Successfully created embeddings for {len(texts)} chunks")
@@ -130,6 +125,13 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
     try:
         existing_indexes = pc.list_indexes().names()
         
+        # Clear existing data if requested (recommended for stock data)
+        if index_name in existing_indexes and clear_existing:
+            print("Clearing existing data from index...")
+            index = pc.Index(index_name)
+            index.delete(delete_all=True)
+            print("Index cleared successfully")
+
         if index_name not in existing_indexes:
             print(f"Creating new Pinecone index: {index_name}")
             pc.create_index(
@@ -144,12 +146,6 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
             print("Index created successfully")
         
         index = pc.Index(index_name)
-
-        # Clear existing data if requested (recommended for stock data)
-        if clear_existing:
-            print("Clearing existing data from index...")
-            index.delete(delete_all=True)
-            print("Index cleared successfully")
 
         vectors = []
         for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
@@ -184,21 +180,44 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
     except Exception as e:
         print(f"Failed to save embeddings to Pinecone: {str(e)}")
         raise
-    
+
 @task
-def get_stock_data(url):
-    """Update stock data with explicit credentials"""
-    df_sp500 = get_base_data(url)
+def get_multiple_stocks_data(tickers: list, period: str = "5y") -> pd.DataFrame:
+    """
+    Get stock data for multiple tickers and return as DataFrame.
+    
+    Args:
+        tickers (list): List of ticker symbols
+        period (str): Historical data period
+        
+    Returns:
+        pd.DataFrame: DataFrame with stock data for all tickers
+    """
+    
+    all_data = []
 
-    for ticker in df_sp500['Ticker'].unique().tolist():
-        df_sp500 = calculate_annualized_returns(ticker_symbol=ticker, df_input=df_sp500, period=period)
-    print(f"Calculated annualized returns for {len(df_sp500['Ticker'].unique().tolist())} tickers.")
+    for ticker in (tickers):
+        try:
+            stock_data = get_stock_data(ticker) 
+            if stock_data is not None:
+                all_data.append(stock_data)
+            else:
+                tqdm.write(f"Warning: No data retrieved for {ticker}")
+        except Exception as e:
+            tqdm.write(f"Error processing {ticker}: {str(e)}")
+            continue
+            
+    df = pd.DataFrame(all_data)
 
-    df_sp500 = df_sp500.sort_values('Market_Cap', ascending=False).reset_index(drop=True)
+    # Clean up Missing Values
+    df['Dividend_Yield'] = df['Dividend_Yield'].fillna(0)
+    df['Sector'] = df['Sector'].fillna('Unknown')
+    df['Industry'] = df['Industry'].fillna('Unknown') 
+    df['Country'] = df['Country'].fillna('Unknown')
+    df['Business_Summary'] = df['Business_Summary'].fillna('No description available')
+    df = df.fillna(0)
 
-    df_sp500['Update_Date'] = datetime.now().strftime('%Y-%m-%d')
-
-    return df_sp500
+    return df.sort_values('Market_Cap', ascending=False, na_position='last')
 
 @task
 def save_to_bigquery(df, credentials):
@@ -226,14 +245,17 @@ def data_processing_flow():
     print("Connecting to HuggingFace Embeddings")
     embeddings_model = connect_to_huggingface_embeddings(huggingface_embeddings_model)
 
-    print("Fetching stock data")
-    df_sp500 = get_stock_data(base_data_url)
-    
+    print("Fetching stock tickers")
+    stock_tickers = get_tickers(base_data_url)
+
+    print("Create Dataset")
+    df_enriched_stock_data = get_multiple_stocks_data(stock_tickers)
+
     print("Saving stock data to BigQuery")
-    bigquery_result = save_to_bigquery(df_sp500, credentials)
+    bigquery_result = save_to_bigquery(df_enriched_stock_data, credentials)
     
     print("Creating text chunks from stock data")
-    chunks = create_text_chunks(df_sp500)
+    chunks = create_text_chunks(df_enriched_stock_data)
     
     print("Creating embeddings using HuggingFace Embeddings")
     embeddings = create_embeddings_with_model(chunks, embeddings_model)

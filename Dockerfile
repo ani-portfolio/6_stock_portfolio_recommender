@@ -15,7 +15,9 @@ RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTr
 
 # Copy all application files into the container
 COPY app.py .
-COPY scripts/ ./scripts/
+COPY src/ ./src/
+COPY pages/ ./pages/
+COPY media/ ./media/
 
 # Expose the port that Streamlit will listen on
 # Cloud Run automatically sets the PORT environment variable
