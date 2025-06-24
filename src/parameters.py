@@ -17,7 +17,7 @@ prefect_pinecone_api_key = "recommendation-app-pinecone-api-key"
 
 # Pinecone Parameters
 huggingface_embeddings_model = "FinLang/finance-embeddings-investopedia"
-pinecone_index_name = "stock-recommendation-app-index-test"
+pinecone_index_name = "stock-recommendation-app-index"
 clear_existing = True
 
 # Groq Parameters
