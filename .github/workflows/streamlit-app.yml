@@ -1,10 +1,6 @@
 name: Streamlit App (GCP Cloud Run)
 
-on: 
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+on: 'push'
 
 env:
   PROJECT_ID: capable-arbor-293714
