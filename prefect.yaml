@@ -1,13 +1,10 @@
 name: Stock Recommender Data Processing Pipeline
 prefect-version: 3.4.6
 
-# Build section - no build needed for Python flows
 build: null
 
-# Push section - no push needed since code is on GitHub
 push: null
 
-# Pull section - clone from GitHub and install dependencies
 pull:
   - prefect.deployments.steps.git_clone:
       id: clone-step
@@ -18,7 +15,6 @@ pull:
       directory: "{{ clone-step.directory }}"
       stream_output: false
 
-# Define deployments
 deployments:
   - name: data-processing-pipeline
     version: 1.0.0

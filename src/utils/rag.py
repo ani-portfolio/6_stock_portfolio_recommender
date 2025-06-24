@@ -127,6 +127,22 @@ INSTRUCTIONS:
 3. Provide specific numbers when available (percentages, dollar amounts, etc.)
 4. If multiple stocks are relevant, compare them
 5. Be conversational but professional
+6. Present the data in a well-formatted table
+7. Use markdown table format with | separators
+8. Include relevant column headers
+9. Show numerical data with appropriate precision
+10. If comparing multiple items, each should be a separate row
+11. Include units (%, $, etc.) in column headers when applicable
+12. Always return Company_Name
+13. Replace '_' with ' ' in column headers for readability
+14. Do not mention anything about the context or how the data was retrieved
+15. Answer the query in text format first, then provide the table
+
+Use the following table format for your answer:
+| Ticker | Closing_Price | Annualized_Return | Market_Cap  |
+|---------|-------------|------------|-----------|
+| AAPL    | $150.25     | 10%      | 28.5T      |
+
 
 ANSWER:
 """
@@ -243,11 +259,10 @@ def create_sample_queries():
         "Find undervalued stocks trading below their 52-week high"
     ]
     
-    st.subheader("💡 Try These Sample Queries")
-    
+    st.markdown("""**Sample Queries** """)
     cols = st.columns(2)
     for i, query in enumerate(sample_queries):
         col = cols[i % 2]
-        if col.button(query, key=f"sample_{i}"):
+        if col.button(query, key=f"sample_{i}", use_container_width=True):
             st.session_state.selected_query = query
             st.rerun()

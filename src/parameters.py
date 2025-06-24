@@ -12,12 +12,12 @@ base_data_url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
 period = "5y"
 
 # Secret Key Name 
-prefect_gcp_service_account_key = "recommendation-app-gcp-sa-key-dev"  # Prefect Secret name for GCP credentials
+prefect_gcp_service_account_key = "recommendation-app-gcp-sa-key-dev"
 prefect_pinecone_api_key = "recommendation-app-pinecone-api-key"
 
 # Pinecone Parameters
-huggingface_embeddings_model = "sentence-transformers/all-MiniLM-L6-v2"
-pinecone_index_name = "stock-recommendation-app-index"
+huggingface_embeddings_model = "FinLang/finance-embeddings-investopedia"
+pinecone_index_name = "stock-recommendation-app-index-test"
 clear_existing = True
 
 # Groq Parameters
