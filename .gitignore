@@ -9,8 +9,5 @@
 # Sample data files
 data/
 
-# Vector database files
-chroma_db/
-
 # streamlit secrets
 .streamlit/secrets.toml
