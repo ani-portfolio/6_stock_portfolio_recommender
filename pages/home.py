@@ -12,79 +12,49 @@ sys.path.append('..')
 from src.parameters import *
 from src.rag import *
 
+
+# --- Custom CSS for orange input box ---
+st.markdown("""
+<style>
+/* Style the text input box */
+.stTextInput > div > div > input {
+    background-color: white !important;
+    border: 2px solid #ddd !important;
+    border-radius: 8px !important;
+    color: #2d3436 !important;
+    font-weight: 500 !important;
+}
+
+/* Input box focus state */
+.stTextInput > div > div > input:focus {
+    background-color: white !important;
+    border-color: #007bff !important;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25) !important;
+}
+
+/* Placeholder text styling */
+.stTextInput > div > div > input::placeholder {
+    color: #636e72 !important;
+    opacity: 0.8 !important;
+}
+
+/* Input label styling */
+.stTextInput > label {
+    color: #666 !important;
+    font-weight: 600 !important;
+}
+
+/* Button height matching input box */
+.stButton > button {
+    height: 48px !important;
+    margin-top: 0px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # --- Header ---
 # st.title("STOCK RECOMMENDATION SYSTEM")
 st.markdown("<h1 style='text-align: center; color: black;'>STOCK RECOMMENDATION SYSTEM</h1>", unsafe_allow_html=True)
-
-# st.markdown("""
-# **RAG-LLM Powered Recommendations**  
-# """)
-# st.divider()
-# # --- Sidebar Configuration ---
-# with st.sidebar:
-#     st.header("⚙️ Configuration")
-    
-#     # API Key Configuration
-#     st.subheader("API Keys")
-#     with st.expander("Configure API Keys"):
-#         st.info("Set your API keys in Streamlit secrets or environment variables:")
-#         st.code("""
-# # In .streamlit/secrets.toml
-# PINECONE_API_KEY = "your_pinecone_key"
-# GROQ_API_KEY = "your_groq_key"
-#         """)
-    
-#     # Model Configuration
-#     st.subheader("Model Settings")
-    
-#     top_k = st.slider("Number of similar stocks to retrieve", 1, 10, 5)
-    
-#     # Check Pinecone connection
-#     if st.button("🔍 Check Pinecone Connection"):
-#         try:
-#             from pinecone import Pinecone
-#             pinecone_api = get_api_key("PINECONE_API_KEY")
-#             if pinecone_api:
-#                 pc = Pinecone(api_key=pinecone_api)
-#                 available_indexes = pc.list_indexes()
-#                 index_names = [idx.name for idx in available_indexes] if available_indexes else []
-                
-#                 if index_names:
-#                     st.success(f"✅ Found {len(index_names)} indexes:")
-#                     for name in index_names:
-#                         st.write(f"- {name}")
-#                 else:
-#                     st.warning("⚠️ No indexes found in your Pinecone project")
-#             else:
-#                 st.error("❌ Pinecone API key not found")
-#         except Exception as e:
-#             st.error(f"❌ Connection failed: {e}")
-    
-#     # System Status
-#     st.subheader("System Status")
-#     pinecone_key = get_api_key("PINECONE_API_KEY")
-#     groq_key = get_api_key("GROQ_API_KEY")
-    
-#     pinecone_status = "🟢 Ready" if pinecone_key else "🔴 Missing API Key"
-#     groq_status = "🟢 Ready" if groq_key else "🔴 Missing API Key"
-    
-#     st.write(f"**Pinecone:** {pinecone_status}")
-#     st.write(f"**Groq LLM:** {groq_status}")
-    
-#     # Show environment info for debugging
-#     if st.checkbox("Show Debug Info"):
-#         st.write("**Environment Variables:**")
-#         st.write(f"- PINECONE_API_KEY: {'✅ Set' if os.getenv('PINECONE_API_KEY') else '❌ Not set'}")
-#         st.write(f"- GROQ_API_KEY: {'✅ Set' if os.getenv('GROQ_API_KEY') else '❌ Not set'}")
-        
-#         st.write("**Streamlit Secrets:**")
-#         try:
-#             pinecone_secret = get_api_key("PINECONE_API_KEY")
-#             groq_secret = get_api_key("GROQ_API_KEY")
-#             st.write(f"- PINECONE_API_KEY: {'✅ Set' if pinecone_secret else '❌ Not set'}")
-#             st.write(f"- GROQ_API_KEY: {'✅ Set' if groq_secret else '❌ Not set'}")
-#         except Exception as e:
-#             st.write(f"- Secrets not accessible: {e}")
 
 # --- Session State Management ---
 if 'selected_query' not in st.session_state:
@@ -158,26 +128,11 @@ if user_query and (search_button or user_query):
                             }
                             </style>
                             <div class="disclaimer-text">
-                                Please note that this information is not financial advice and should not be considered as such.
+                                Please note that this information is not financial advice and should not be considered as such
                             </div>
                             """,
                             unsafe_allow_html=True
                         )
-                
-                # # Metrics
-                # col1, col2, col3 = st.columns(3)
-                # with col1:
-                #     st.metric("Sources Found", response['num_sources'])
-                # with col2:
-                #     st.metric("Query Type", "RAG Analysis")
-                # with col3:
-                #     st.metric("Status", "Success")
-                
-                # # Show context if enabled
-                # show_context = st.checkbox("Show retrieved context", value=True)
-                # if show_context and response['context']:
-                #     st.divider()
-                #     display_stock_cards(response['context'])
                 
             else:
                 st.error("❌ Analysis Failed")
