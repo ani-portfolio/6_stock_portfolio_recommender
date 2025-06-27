@@ -252,9 +252,9 @@ def create_sample_queries():
     
     sample_queries = [
         "What is NVIDIA's annualized return?",
-        "Show me dividend-paying stocks with low volatility",
-        "Which stocks have the highest annualized returns in 2024?",
         "What is Apple's return in 2024?",
+        "Which stocks have the highest annualized returns in 2024?",
+        "Show me dividend-paying stocks with low volatility",
         "Find stocks with a P/E ratio below 20 and annualized return above 10%",
         "Find undervalued stocks trading below their 52-week high"
     ]

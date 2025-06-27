@@ -1,0 +1,21 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hand-drawn wavy upward trending lines like stock price movement -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- First line - bright orange, bottom line -->
+    <path d="M30 150 C40 148, 50 152, 60 145 C70 138, 80 142, 90 135 C100 128, 110 132, 120 125 C130 118, 140 122, 150 115 C160 110, 170 112, 180 108" 
+          stroke="#FF8C00" stroke-width="4" opacity="0.9"/>
+    
+    <!-- Second line - darker orange -->
+    <path d="M25 130 C35 128, 45 132, 55 125 C65 118, 75 122, 85 115 C95 108, 105 112, 115 105 C125 98, 135 102, 145 95 C155 90, 165 92, 175 88" 
+          stroke="#E5750A" stroke-width="3.5" opacity="0.8"/>
+    
+    <!-- Third line - grey -->
+    <path d="M35 110 C45 108, 55 112, 65 105 C75 98, 85 102, 95 95 C105 88, 115 92, 125 85 C135 78, 145 82, 155 75 C165 70, 175 72, 185 68" 
+          stroke="#666" stroke-width="3" opacity="0.7"/>
+    
+    <!-- Fourth line - light orange, top line -->
+    <path d="M20 90 C30 88, 40 92, 50 85 C60 78, 70 82, 80 75 C90 68, 100 72, 110 65 C120 58, 130 62, 140 55 C150 50, 160 52, 170 48" 
+          stroke="#FFA54F" stroke-width="2.5" opacity="0.6"/>
+  </g>
+
+</svg>

@@ -236,3 +236,46 @@ def load_table_from_bigquery(dataset_id, table_id, project_id):
     query = f"SELECT * FROM `{dataset_id}.{table_id}`"
     df = pandas_gbq.read_gbq(query, project_id=project_id)
     return df
+
+def create_summary_chart(df):
+    df_result = df.copy()
+    
+    # Create the 'Risk' column based on the specified conditions
+    def determine_Risk_signal(row):
+        all_time_high_condition = row['Percent_From_All_Time_High'] < -10
+        moving_avg_condition = row['Percent_Difference_200_Day_Moving_Average'] < 0
+        
+        # If Percent_From_All_Time_High is greater than -10%, then 'High'
+        if row['Percent_From_All_Time_High'] >= -10:
+            return 'High'
+        
+        # If both conditions are met (< -10% and negative moving avg), then 'Low'
+        if all_time_high_condition and moving_avg_condition:
+            return 'Low'
+        
+        # If only one condition is met, then 'Medium'
+        if all_time_high_condition or moving_avg_condition:
+            return 'Medium'
+        
+        # Default case (shouldn't reach here based on logic, but safety)
+        return 'High'
+    
+    # Apply the Risk signal logic
+    df_result['Risk'] = df_result.apply(determine_Risk_signal, axis=1)
+    
+    # Get top 25 by Market Cap first
+    df_top_25 = df_result.sort_values('Market_Cap', ascending=False).head(25)
+    
+    # Create categorical ordering for Risk column
+    Risk_order = ['Low', 'Medium', 'High']
+    df_top_25['Risk'] = pd.Categorical(df_top_25['Risk'], categories=Risk_order, ordered=True)
+    
+    # Sort by Risk column (Low, Medium, High), then by Market Cap descending
+    df_sorted = df_top_25.sort_values(['Risk', 'Market_Cap'], ascending=[True, False])
+    
+    # Return the sorted dataframe with selected columns
+    return df_sorted[
+        ['Ticker', 'Company_Name', 'Market_Cap', 'Closing_Price', 'All_Time_High', 'Risk',
+         'Percent_From_All_Time_High', 'Percent_Difference_200_Day_Moving_Average', 
+         '24_Hour_Percent_Change', '7_Day_Percent_Change', '30_Day_Percent_Change']
+    ].reset_index(drop=True)
