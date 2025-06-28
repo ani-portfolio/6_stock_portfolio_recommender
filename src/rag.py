@@ -137,11 +137,12 @@ INSTRUCTIONS:
 13. Replace '_' with ' ' in column headers for readability
 14. Do not mention anything about the context or how the data was retrieved
 15. Answer the query in text format first, then provide the table
+16. At the end of the answer, add the following disclaimer "Please note that this is based on 10 years of historical data last updated on Update_Date"
 
-Use the following table format for your answer:
-| Ticker | Closing_Price | Annualized_Return | Market_Cap  |
+Use the following table format for your answer. Always include the 4 fields Ticker, Closing_Price, All_Time_High, Percent_From_All_Time_High but feel free to add any other additional pertinent fields:
+| Ticker | Closing_Price | All_Time_High  | Percent_From_All_Time_High
 |---------|-------------|------------|-----------|
-| AAPL    | $150.25     | 10%      | 28.5T      |
+| AAPL    | $150.25     | $28.15      | 10%     
 
 
 ANSWER:

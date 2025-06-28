@@ -9,7 +9,7 @@ table_id = 'stock_data'
 
 # Data Processing Parameters
 base_data_url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
-period = "5y"
+period = "10y"
 
 # Secret Key Name 
 prefect_gcp_service_account_key = "recommendation-app-gcp-sa-key-dev"

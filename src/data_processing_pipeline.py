@@ -198,8 +198,9 @@ def get_multiple_stocks_data(tickers: list, period: str = "5y") -> pd.DataFrame:
 
     for ticker in (tickers):
         try:
-            stock_data = get_stock_data(ticker) 
-            if stock_data is not None:
+            stock_data = get_stock_data(ticker)  # your existing function
+            if stock_data is not None:  # Only append if data was successfully retrieved
+                tqdm.write(f'Processing {ticker}')
                 all_data.append(stock_data)
             else:
                 tqdm.write(f"Warning: No data retrieved for {ticker}")
@@ -216,6 +217,9 @@ def get_multiple_stocks_data(tickers: list, period: str = "5y") -> pd.DataFrame:
     df['Country'] = df['Country'].fillna('Unknown')
     df['Business_Summary'] = df['Business_Summary'].fillna('No description available')
     df = df.fillna(0)
+
+    today_date = datetime.now().date().strftime("%Y-%m-%d")
+    df['Update_Date'] = today_date
 
     return df.sort_values('Market_Cap', ascending=False, na_position='last')
 
