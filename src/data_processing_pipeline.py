@@ -210,7 +210,7 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
         raise
 
 @task
-def get_multiple_stocks_data(tickers, period="5y"):
+def get_multiple_stocks_data(tickers):
     """
     Get stock data for multiple tickers and return as DataFrame.
     Args:
@@ -305,7 +305,7 @@ def data_processing_flow():
     df_enriched_stock_data = get_multiple_stocks_data(stock_tickers)
 
     print("Add Sentiment")
-    df_enriched_stock_data = sentiment_analysis(df_enriched_stock_data, Secret.load(newsapi_key).get(), sentiment_base_url)
+    df_enriched_stock_data = sentiment_analysis(df_enriched_stock_data, Secret.load(prefect_newsapi_key).get(), sentiment_base_url)
     
     print("Saving stock data to BigQuery")
     bigquery_result = save_to_bigquery(df_enriched_stock_data, credentials)
