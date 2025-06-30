@@ -1,44 +1,44 @@
 import streamlit as st
-import pandas as pd
-from typing import List, Dict, Any
-import plotly.express as px
-import plotly.graph_objects as go
-from datetime import datetime
 import os
+from typing import List, Dict
 
-def get_api_key(key_name: str) -> str:
+def get_api_key(key_name):
     """
-    Get API key from environment variables or Streamlit secrets
-    Prioritizes environment variables for Cloud Run compatibility
+    Get API key from environment variables or Streamlit secrets.
+    Args:
+        key_name: Name of the API key
+    Returns:
+        API key value or empty string if not found
     """
-    # First try environment variables (works in Cloud Run)
     env_value = os.getenv(key_name)
     if env_value:
         return env_value
     
-    # Fallback to Streamlit secrets (local development)
     try:
         return st.secrets.get(key_name, "")
-    except Exception:
-        # If st.secrets fails (e.g., no secrets.toml), return empty string
+    except:
         return ""
 
-def initialize_rag_components(pinecone_api: str, 
-                              groq_api: str, 
-                              groq_llm_model: str, 
-                              huggingface_embeddings_model: str,
-                              pinecone_index_name: str) -> tuple:
-    """Initialize all RAG components: Pinecone, Groq LLM, and HuggingFace embeddings"""
+def initialize_rag_components(pinecone_api, groq_api, groq_llm_model, huggingface_embeddings_model, pinecone_index_name):
+    """
+    Initialize all RAG components: Pinecone, Groq LLM, and HuggingFace embeddings.
+    Args:
+        pinecone_api: Pinecone API key
+        groq_api: Groq API key
+        groq_llm_model: Groq LLM model name
+        huggingface_embeddings_model: HuggingFace embeddings model name
+        pinecone_index_name: Pinecone index name
+    Returns:
+        Initialized components (index, llm, embeddings)
+    """
     try:
         from pinecone import Pinecone
         from langchain_groq import ChatGroq
         from langchain_huggingface import HuggingFaceEmbeddings
         
-        # Initialize Pinecone
         pc = Pinecone(api_key=pinecone_api)
         index = pc.Index(pinecone_index_name)
 
-        # Initialize Groq LLM
         llm = ChatGroq(
             groq_api_key=groq_api,
             model=groq_llm_model,
@@ -46,7 +46,6 @@ def initialize_rag_components(pinecone_api: str,
             max_tokens=1000
         )
         
-        # Initialize HuggingFace embeddings (same as used in indexing)
         embeddings = HuggingFaceEmbeddings(
             model_name=huggingface_embeddings_model,
             model_kwargs={'device': 'cpu'},
@@ -58,14 +57,20 @@ def initialize_rag_components(pinecone_api: str,
         st.error(f"Missing required packages: {e}")
         return None, None, None
 
-def retrieve_relevant_context(query: str, index, embeddings, top_k: int = 5) -> List[Dict]:
-    """Retrieve relevant stock data from Pinecone"""
-    
+def retrieve_relevant_context(query, index, embeddings, top_k=5):
+    """
+    Retrieve relevant stock data from Pinecone.
+    Args:
+        query: Search query
+        index: Pinecone index object
+        embeddings: HuggingFace embeddings object
+        top_k: Number of results to retrieve
+    Returns:
+        List of retrieved documents with metadata
+    """
     try:
-        # Convert query to embedding
         query_embedding = embeddings.embed_query(query)
         
-        # Search Pinecone for similar vectors
         search_results = index.query(
             vector=query_embedding,
             top_k=top_k,
@@ -73,7 +78,6 @@ def retrieve_relevant_context(query: str, index, embeddings, top_k: int = 5) -> 
             include_values=False
         )
         
-        # Extract relevant documents
         retrieved_docs = []
         for match in search_results.matches:
             retrieved_docs.append({
@@ -94,9 +98,14 @@ def retrieve_relevant_context(query: str, index, embeddings, top_k: int = 5) -> 
         print(f"Error retrieving context: {e}")
         return []
 
-def format_context_for_llm(retrieved_docs: List[Dict]) -> str:
-    """Format retrieved documents for LLM context"""
-    
+def format_context_for_llm(retrieved_docs):
+    """
+    Format retrieved documents for LLM context.
+    Args:
+        retrieved_docs: List of retrieved documents
+    Returns:
+        Formatted context string
+    """
     if not retrieved_docs:
         return "No relevant stock data found."
     
@@ -104,13 +113,17 @@ def format_context_for_llm(retrieved_docs: List[Dict]) -> str:
     
     for i, doc in enumerate(retrieved_docs, 1):
         context_parts.append(f"=== Stock Data {i} (Relevance: {doc['score']:.3f}) ===")
-        context_parts.append(doc['content'])  # This contains all the formatted stock info
-        context_parts.append("")  # Spacing
+        context_parts.append(doc['content'])
+        context_parts.append("")
     
     return "\n".join(context_parts)
 
 def create_stock_prompt_template():
-    """Create a prompt template for stock-related queries"""
+    """
+    Create a prompt template for stock-related queries.
+    Returns:
+        Configured prompt template
+    """
     from langchain.prompts import PromptTemplate
     
     template = """
@@ -144,27 +157,29 @@ Use the following table format for your answer. Always include the 4 fields Tick
 |---------|-------------|------------|-----------|
 | AAPL    | $150.25     | $28.15      | 10%     
 
-
 ANSWER:
 """
     
-    return PromptTemplate(
-        template=template,
-        input_variables=["context", "question"]
-    )
+    return PromptTemplate(template=template, input_variables=["context", "question"])
 
 def rag_query_stocks(query, top_k, groq_llm_model, huggingface_embeddings_model, pinecone_index_name):
-    """Enhanced RAG function using stored page content"""
-    
+    """
+    Enhanced RAG function using stored page content.
+    Args:
+        query: User query
+        top_k: Number of results to retrieve
+        groq_llm_model: Groq LLM model name
+        huggingface_embeddings_model: HuggingFace embeddings model name
+        pinecone_index_name: Pinecone index name
+    Returns:
+        Query results with answer, context, and metadata
+    """
     try:
         print(f"Query: {query}")
         
-        # Get API keys from environment or Streamlit secrets
         pinecone_api = get_api_key("PINECONE_API_KEY")
         groq_api = get_api_key("GROQ_API_KEY")
-
         
-        # Initialize components
         index, llm, embeddings = initialize_rag_components(
             pinecone_api=pinecone_api,
             groq_api=groq_api,
@@ -181,7 +196,6 @@ def rag_query_stocks(query, top_k, groq_llm_model, huggingface_embeddings_model,
                 "success": False
             }
         
-        # Use enhanced retrieval with stored content
         print("Retrieving relevant stock data with full content...")
         retrieved_docs = retrieve_relevant_context(query, index, embeddings, top_k)
         
@@ -193,17 +207,11 @@ def rag_query_stocks(query, top_k, groq_llm_model, huggingface_embeddings_model,
                 "success": False
             }
         
-        # Format context using full content
         context_text = format_context_for_llm(retrieved_docs)
         
-        # Create prompt
         prompt_template = create_stock_prompt_template()
-        formatted_prompt = prompt_template.format(
-            context=context_text,
-            question=query
-        )
+        formatted_prompt = prompt_template.format(context=context_text, question=query)
         
-        # Generate answer using Groq
         print("Generating answer with Groq...")
         response = llm.invoke(formatted_prompt)
         answer = response.content
@@ -224,9 +232,12 @@ def rag_query_stocks(query, top_k, groq_llm_model, huggingface_embeddings_model,
             "success": False
         }
 
-def display_stock_cards(retrieved_docs: List[Dict]):
-    """Display retrieved stock information as cards"""
-    
+def display_stock_cards(retrieved_docs):
+    """
+    Display retrieved stock information as cards.
+    Args:
+        retrieved_docs: List of retrieved documents
+    """
     if not retrieved_docs:
         return
     
@@ -249,8 +260,9 @@ def display_stock_cards(retrieved_docs: List[Dict]):
             st.text(doc['content'][:500] + "..." if len(doc['content']) > 500 else doc['content'])
 
 def create_sample_queries():
-    """Create sample query buttons for users"""
-    
+    """
+    Create sample query buttons for users.
+    """
     sample_queries = [
         "What is NVIDIA's annualized return?",
         "What is Apple's return in 2024?",
@@ -260,7 +272,7 @@ def create_sample_queries():
         "Find undervalued stocks trading below their 52-week high"
     ]
     
-    st.markdown("""**Sample Queries** """)
+    st.markdown("**Sample Queries**")
     cols = st.columns(2)
     for i, query in enumerate(sample_queries):
         col = cols[i % 2]

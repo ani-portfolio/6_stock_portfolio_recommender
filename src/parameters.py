@@ -1,5 +1,3 @@
-
-
 # GCP Parameters
 staging_dataset = "stock_data"
 location = "US"
@@ -22,3 +20,9 @@ clear_existing = True
 
 # Groq Parameters
 groq_llm_model = "llama-3.3-70b-versatile"
+
+# NewsAPI
+sentiment_base_url = "https://newsapi.org/v2/everything"
+newsapi_key = "recommendation-app-news-api-key"
+
+
