@@ -30,5 +30,6 @@ deployments:
     entrypoint: src/data_processing_pipeline.py:data_processing_flow
     work_pool:
       name: default-work-pool
-      job_variables: {}
+      job_variables:
+        image: "python:3.11.6-slim"
     parameters: {}
