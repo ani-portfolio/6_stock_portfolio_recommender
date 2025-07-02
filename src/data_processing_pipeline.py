@@ -283,7 +283,7 @@ def sentiment_analysis(df, api_key, base_url):
     df = pd.merge(df, df_sentiment, how='left', on='Ticker')
     return df.sort_values(['Market_Cap'], ascending=False).reset_index(drop=True)
 
-@flow(log_prints=True, name="data-processing-pipeline-test")
+@flow(log_prints=True, name="data-processing-pipeline")
 def data_processing_flow():
     """
     Main data processing flow for stock data pipeline.

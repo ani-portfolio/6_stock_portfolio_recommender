@@ -16,13 +16,13 @@ pull:
       stream_output: false
 
 deployments:
-  - name: data-processing-pipeline
+  - name: data-processing-pipeline-test
     version: 1.0.0
     tags:
       - stock-data
       - bigquery
       - pinecone
-    flow_name: data-processing-pipeline
+    flow_name: data-processing-pipeline-test
     description: Updates stock data in BigQuery & saves embeddings in Pinecone (5PM EST Every Weekday)
     schedule:
       cron: "0 17 * * 1-5"
@@ -31,5 +31,5 @@ deployments:
     work_pool:
       name: default-work-pool
       job_variables:
-        image: "python:3.11.6-slim"
+        image: "prefecthq/prefect-client:3-python3.11"
     parameters: {}
