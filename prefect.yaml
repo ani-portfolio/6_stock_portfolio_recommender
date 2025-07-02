@@ -31,5 +31,5 @@ deployments:
     work_pool:
       name: default-work-pool
       job_variables:
-        image: "prefecthq/prefect-client:3-python3.11.6"
+        image: "prefecthq/prefect:3-python3.11"
     parameters: {}
