@@ -16,13 +16,13 @@ pull:
       stream_output: false
 
 deployments:
-  - name: data-processing-pipeline
+  - name: data-processing-pipeline-test
     version: 1.0.0
     tags:
       - stock-data
       - bigquery
       - pinecone
-    flow_name: data-processing-pipeline
+    flow_name: data-processing-pipeline-test
     description: Updates stock data in BigQuery & saves embeddings in Pinecone (5PM EST Every Weekday)
     schedule:
       cron: "0 17 * * 1-5"

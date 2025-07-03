@@ -13,32 +13,32 @@ from data_ingestion import *
 from parameters import *
 from sentiment import *
 
-@task
-def setup_gcp_credentials(service_account_key):
-    """
-    Load GCP credentials from Prefect Secret and return credentials object.
-    Args:
-        service_account_key: Prefect secret key for GCP service account
-    Returns:
-        GCP credentials object
-    """
-    logger = get_run_logger()
+# @task
+# def setup_gcp_credentials(service_account_key):
+#     """
+#     Load GCP credentials from Prefect Secret and return credentials object.
+#     Args:
+#         service_account_key: Prefect secret key for GCP service account
+#     Returns:
+#         GCP credentials object
+#     """
+#     logger = get_run_logger()
     
-    try:
-        secret_block = Secret.load(service_account_key)
-        credentials_json = secret_block.get()
+#     try:
+#         secret_block = Secret.load(service_account_key)
+#         credentials_json = secret_block.get()
         
-        credentials = service_account.Credentials.from_service_account_info(
-            credentials_json,
-            scopes=["https://www.googleapis.com/auth/bigquery"]
-        )
+#         credentials = service_account.Credentials.from_service_account_info(
+#             credentials_json,
+#             scopes=["https://www.googleapis.com/auth/bigquery"]
+#         )
         
-        logger.info("GCP credentials loaded successfully from Prefect Secret")
-        return credentials
+#         logger.info("GCP credentials loaded successfully from Prefect Secret")
+#         return credentials
 
-    except Exception as e:
-        logger.error(f"Failed to load GCP credentials: {str(e)}")
-        raise
+#     except Exception as e:
+#         logger.error(f"Failed to load GCP credentials: {str(e)}")
+#         raise
 
 @task
 def connect_to_pinecone(pinecone_api_key):
@@ -289,7 +289,7 @@ def data_processing_flow():
     Main data processing flow for stock data pipeline.
     Orchestrates the entire ETL process from data ingestion to vector storage.
     """
-    print("Loading GCP credentials")
+    # print("Loading GCP credentials")
     # credentials = setup_gcp_credentials(prefect_gcp_service_account_key)
 
     print("Connecting to Pinecone")
