@@ -9,20 +9,20 @@ pull:
   - prefect.deployments.steps.git_clone:
       id: clone-step
       repository: https://github.com/ani-portfolio/6_stock_portfolio_recommender.git
-      branch: feature/sentiment_analysis
+      branch: feature/sentiment_analysis 
   - prefect.deployments.steps.pip_install_requirements:
       requirements_file: requirements.txt
       directory: "{{ clone-step.directory }}"
       stream_output: false
 
 deployments:
-  - name: data-processing-pipeline-test
+  - name: data-processing-pipeline
     version: 1.0.0
     tags:
       - stock-data
       - bigquery
       - pinecone
-    flow_name: data-processing-pipeline-test
+    flow_name: data-processing-pipeline
     description: Updates stock data in BigQuery & saves embeddings in Pinecone (5PM EST Every Weekday)
     schedule:
       cron: "0 17 * * 1-5"
@@ -30,6 +30,5 @@ deployments:
     entrypoint: src/data_processing_pipeline.py:data_processing_flow
     work_pool:
       name: default-work-pool
-      job_variables:
-        image: "prefecthq/prefect-client:3-python3.10"
+      job_variables: {}
     parameters: {}

@@ -290,7 +290,7 @@ def data_processing_flow():
     Orchestrates the entire ETL process from data ingestion to vector storage.
     """
     print("Loading GCP credentials")
-    credentials = setup_gcp_credentials(prefect_gcp_service_account_key)
+    # credentials = setup_gcp_credentials(prefect_gcp_service_account_key)
 
     print("Connecting to Pinecone")
     pc = connect_to_pinecone(prefect_pinecone_api_key)
