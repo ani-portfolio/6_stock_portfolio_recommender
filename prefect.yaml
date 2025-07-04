@@ -1,5 +1,4 @@
 name: Stock Recommender Data Processing Pipeline
-# prefect-version: 3.1.9
 
 build: null
 
@@ -16,14 +15,14 @@ pull:
       stream_output: false
 
 deployments:
-  - name: data-processing-pipeline-deployment-test
+  - name: data-processing-pipeline-deployment
     version: 1.0.0
     tags:
       - stock-data
       - bigquery
       - pinecone
       
-    flow_name: data-processing-pipeline-deployment-test
+    flow_name: data-processing-pipeline-deployment
     description: Updates stock data in BigQuery & saves embeddings in Pinecone (5PM EST Every Weekday)
     schedules:
       - cron: "0 17 * * 1-5"

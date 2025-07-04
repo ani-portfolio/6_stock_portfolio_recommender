@@ -3,7 +3,7 @@ name: Streamlit App (GCP Cloud Run)
 on: 
   push:
     branches:
-      - main
+      - feature/sentiment_analysis
   workflow_dispatch:
 
 env:
