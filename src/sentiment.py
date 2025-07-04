@@ -67,15 +67,15 @@ def analyze_text_sentiment(text, sentiment_analyzer):
         
         def get_granular_sentiment(score):
             if score <= 0.25:
-                return 'extremely_negative'
+                return 'Extremely_Negative'
             elif score <= 0.45:
-                return 'negative'
+                return 'Negative'
             elif score <= 0.55:
-                return 'neutral'
+                return 'Neutral'
             elif score <= 0.75:
-                return 'positive'
+                return 'Positive'
             else:
-                return 'extremely_positive'
+                return 'Extremely_Positive'
         
         if is_negative:
             adjusted_score = 1.0 - confidence_score
@@ -93,7 +93,7 @@ def analyze_text_sentiment(text, sentiment_analyzer):
         
     except:
         return {
-            'granular_sentiment': 'neutral',
+            'granular_sentiment': 'Neutral',
             'score': 0.5
         }
 
@@ -107,7 +107,7 @@ def analyze_articles_sentiment(articles, sentiment_analyzer):
         Dict: Aggregated sentiment analysis
     """
     if not articles:
-        return {'Sentiment': 'neutral'}
+        return {'Sentiment': 'Neutral'}
     
     sentiment_scores = []
     
@@ -123,21 +123,21 @@ def analyze_articles_sentiment(articles, sentiment_analyzer):
             sentiment_scores.append(sentiment_result['score'])
     
     if not sentiment_scores:
-        return {'Sentiment': 'neutral'}
+        return {'Sentiment': 'Neutral'}
     
     overall_score = np.mean(sentiment_scores)
     
     def get_overall_sentiment(score):
         if score <= 0.25:
-            return 'extremely_negative'
+            return 'Extremely_Negative'
         elif score <= 0.45:
-            return 'negative'
+            return 'Negative'
         elif score <= 0.55:
-            return 'neutral'
+            return 'Neutral'
         elif score <= 0.75:
-            return 'positive'
+            return 'Positive'
         else:
-            return 'extremely_positive'
+            return 'Extremely_Positive'
     
     return {'Sentiment': get_overall_sentiment(overall_score)}
 
@@ -169,6 +169,6 @@ def analyze_multiple_stocks(tickers, api_key, base_url):
             results.append(sentiment_results)
             time.sleep(0.1)
         except:
-            results.append({'Ticker': ticker, 'Sentiment': 'neutral'})
+            results.append({'Ticker': ticker, 'Sentiment': 'Neutral'})
     
     return pd.DataFrame(results)
