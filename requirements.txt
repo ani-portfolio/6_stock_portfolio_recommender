@@ -158,7 +158,7 @@ pinecone-plugin-assistant==1.7.0
 pinecone-plugin-interface==0.0.7
 platformdirs==4.3.8
 plotly==6.1.2
-prefect==3.1.9
+prefect==3.4.7
 prometheus_client==0.22.1
 prompt_toolkit==3.0.51
 propcache==0.3.2
@@ -203,6 +203,7 @@ ruamel.yaml.clib==0.2.12
 safetensors==0.5.3
 scikit-learn==1.7.0
 scipy==1.15.3
+semver==3.0.4
 Send2Trash==1.8.3
 sentence-transformers==4.1.0
 shellingham==1.5.4
