@@ -1,13 +1,7 @@
 import streamlit as st
 
-# --- Links Page ---
-# st.title("LINKS")
 st.markdown("""<h1 style='text-align: center; color: black;'>LINKS</h1>""", unsafe_allow_html=True)
-# st.markdown("""
-# **GitHub • Portfolio • LinkedIn**  
-# """)
 
-# Create 3 columns for the links
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -33,9 +27,9 @@ with col3:
     
     Connect with me on LinkedIn to discuss data science, machine learning, and career opportunities.
     """)
+
 st.divider()
 
-# --- Footer ---
 st.markdown("""
 <div style='text-align: center; color: #666;'>
 <p> Created by Ani Dharmarajan </p>

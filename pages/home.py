@@ -1,22 +1,16 @@
 import streamlit as st
-import pandas as pd
-from typing import List, Dict, Any
-import plotly.express as px
-import plotly.graph_objects as go
-from datetime import datetime
-import os
-
-# Import your modules (adjust the import path as needed)
 import sys
+
 sys.path.append('..')
 from src.parameters import *
 from src.rag import *
+from src.query_router import *
+from src.data_ingestion import *
+from src.recommender import *
 
 
-# --- Custom CSS for orange input box ---
 st.markdown("""
 <style>
-/* Style the text input box */
 .stTextInput > div > div > input {
     background-color: white !important;
     border: 2px solid #ddd !important;
@@ -25,26 +19,22 @@ st.markdown("""
     font-weight: 500 !important;
 }
 
-/* Input box focus state */
 .stTextInput > div > div > input:focus {
     background-color: white !important;
     border-color: #007bff !important;
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25) !important;
 }
 
-/* Placeholder text styling */
 .stTextInput > div > div > input::placeholder {
     color: #636e72 !important;
     opacity: 0.8 !important;
 }
 
-/* Input label styling */
 .stTextInput > label {
     color: #666 !important;
     font-weight: 600 !important;
 }
 
-/* Button height matching input box */
 .stButton > button {
     height: 48px !important;
     margin-top: 0px !important;
@@ -52,22 +42,16 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Header ---
-# st.title("STOCK RECOMMENDATION SYSTEM")
 st.markdown("<h1 style='text-align: center; color: black;'>STOCK RECOMMENDATION SYSTEM</h1>", unsafe_allow_html=True)
 
-# --- Session State Management ---
 if 'selected_query' not in st.session_state:
     st.session_state.selected_query = ""
 
-# --- Main Interface ---
 col1, col2 = st.columns([3, 1])
 
 with col1:
-    # Use selected_query as default value if available
     default_value = st.session_state.selected_query if st.session_state.selected_query else ""
     
-    # Query Input
     user_query = st.text_input(
         "🔍 Ask about stocks, sectors, or portfolio strategies:",
         placeholder="e.g., 'Which tech stocks have high returns and low risk?'",
@@ -75,36 +59,44 @@ with col1:
         key="user_input"
     )
     
-    # Clear the selected query after it's been used
     if st.session_state.selected_query:
         st.session_state.selected_query = ""
 
 with col2:
-    st.write("")  # Spacing
+    st.write("")
     search_button = st.button("🚀 Analyze", type="primary", use_container_width=True)
 
-# --- Sample Queries ---
 create_sample_queries()
 
-# --- Process Query ---
+# query_route
+result = router(user_query)
+
 if user_query and (search_button or user_query):
     with st.spinner("🔍 Analyzing stock data..."):
         try:
-            # Get the pinecone index name from sidebar
             index_name = pinecone_index_name
             
-            # Perform RAG query
-            response = rag_query_stocks(query=user_query, top_k=10, groq_llm_model=groq_llm_model,
-                                        huggingface_embeddings_model=huggingface_embeddings_model,
-                                        pinecone_index_name=index_name)
+            if result['route'] == 'semantic_search':
+                response = rag_query_stocks(query=user_query, top_k=10, groq_llm_model=groq_llm_model,
+                                            huggingface_embeddings_model=huggingface_embeddings_model,
+                                            pinecone_index_name=index_name)
+                
+            if result['route'] == 'recommender':
+                df_stock_data = load_table_from_bigquery(dataset_id, table_id, project_id)
+                non_numerical_columns = ['Ticker', 'Company_Name', 'Sector', 'Industry', 'Country', 'Business_Summary', 'Sentiment', 'Update_Date']
+                numerical_columns = df_stock_data.drop(non_numerical_columns, axis=1).columns.tolist()
+
+                response = recommend_stocks_from_query(df=df_stock_data,
+                                                              user_query=user_query, 
+                                                              numerical_columns=numerical_columns,
+                                                              non_numerical_columns=non_numerical_columns,
+                                                              top_n=5,
+                                                              groq_api_key=get_api_key("GROQ_API_KEY"))
             
             if response['success']:
-                # Display main answer
                 st.success("Analysis Complete")
                 
-                # Main answer in prominent container
                 with st.container():
-                    # st.subheader("🎯 Investment Insights")
                     st.markdown(response['answer'])
 
                     st.markdown(
@@ -142,7 +134,6 @@ if user_query and (search_button or user_query):
             st.error(f"❌ An error occurred: {str(e)}")
             st.info("Please check your API keys and ensure all dependencies are installed.")
 
-# --- Footer ---
 st.divider()
 st.markdown("""
 <div style='text-align: center; color: #666;'>
