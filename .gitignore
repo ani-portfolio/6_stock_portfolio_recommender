@@ -10,4 +10,5 @@
 data/
 
 # streamlit secrets
+.streamlit
 .streamlit/secrets.toml

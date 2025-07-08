@@ -1,5 +1,4 @@
 name: Stock Recommender Data Processing Pipeline
-prefect-version: 3.4.6
 
 build: null
 
@@ -16,19 +15,21 @@ pull:
       stream_output: false
 
 deployments:
-  - name: data-processing-pipeline
+  - name: data-processing-pipeline-deployment
     version: 1.0.0
     tags:
       - stock-data
       - bigquery
       - pinecone
-    flow_name: data-processing-pipeline
+      
+    flow_name: data-processing-pipeline-deployment
     description: Updates stock data in BigQuery & saves embeddings in Pinecone (5PM EST Every Weekday)
-    schedule:
-      cron: "0 17 * * 1-5"
-      timezone: "EST"
+    schedules:
+      - cron: "0 17 * * 1-5"
+        timezone: "EST"
     entrypoint: src/data_processing_pipeline.py:data_processing_flow
     work_pool:
       name: default-work-pool
-      job_variables: {}
+      job_variables:
+        image: "prefecthq/prefect-client:3-latest"
     parameters: {}

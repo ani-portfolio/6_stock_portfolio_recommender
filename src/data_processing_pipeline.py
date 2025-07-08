@@ -4,7 +4,6 @@ from google.oauth2 import service_account
 from datetime import datetime
 import pandas as pd
 from tqdm import tqdm
-
 from google.cloud import bigquery
 from pinecone import Pinecone, ServerlessSpec
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -12,10 +11,17 @@ from langchain.schema import Document
 
 from data_ingestion import *
 from parameters import *
+from sentiment import *
 
 @task
 def setup_gcp_credentials(service_account_key):
-    """Load GCP credentials from Prefect Secret and return credentials object"""
+    """
+    Load GCP credentials from Prefect Secret and return credentials object.
+    Args:
+        service_account_key: Prefect secret key for GCP service account
+    Returns:
+        GCP credentials object
+    """
     logger = get_run_logger()
     
     try:
@@ -36,8 +42,13 @@ def setup_gcp_credentials(service_account_key):
 
 @task
 def connect_to_pinecone(pinecone_api_key):
-    """Initialize Pinecone connection and return client"""  
-
+    """
+    Initialize Pinecone connection and return client.
+    Args:
+        pinecone_api_key: Prefect secret key for Pinecone API
+    Returns:
+        Pinecone client object
+    """
     logger = get_run_logger()
 
     try:        
@@ -54,8 +65,13 @@ def connect_to_pinecone(pinecone_api_key):
 
 @task
 def connect_to_huggingface_embeddings(huggingface_embeddings_model):
-    """Initialize HuggingFace embedding model"""
-    
+    """
+    Initialize HuggingFace embedding model.
+    Args:
+        huggingface_embeddings_model: Model name for HuggingFace embeddings
+    Returns:
+        HuggingFace embeddings object
+    """
     try:
         embeddings = HuggingFaceEmbeddings(
             model_name=huggingface_embeddings_model,
@@ -70,19 +86,22 @@ def connect_to_huggingface_embeddings(huggingface_embeddings_model):
 
 @task
 def create_text_chunks(df):
-    """Create exactly one text chunk per stock row"""
-    
+    """
+    Create exactly one text chunk per stock row.
+    Args:
+        df: DataFrame containing stock data
+    Returns:
+        List of Document objects with stock information
+    """
     try:
         chunks = []
         
-        # Convert each stock record to a single chunk
         for _, row in df.iterrows():
             doc_content = ""
             for col in df.columns:
                 if pd.notna(row[col]):
                     doc_content += f"{col}: {row[col]}\n"
             
-            # Create metadata for each document
             metadata = {
                 "Ticker": row['Ticker'],
                 "Company_Name": row['Company_Name'], 
@@ -102,13 +121,16 @@ def create_text_chunks(df):
 
 @task
 def create_embeddings_with_model(chunks, embeddings_model):
-    """Create embeddings for text chunks using the embedding model"""
-    
+    """
+    Create embeddings for text chunks using the embedding model.
+    Args:
+        chunks: List of Document objects
+        embeddings_model: HuggingFace embeddings model
+    Returns:
+        List of embeddings vectors
+    """
     try:
-        # Extract text content from chunks
         texts = [chunk.page_content for chunk in chunks]
-        
-        # Create embeddings
         embeddings = embeddings_model.embed_documents(texts)
 
         print(f"Successfully created embeddings for {len(texts)} chunks")
@@ -120,12 +142,20 @@ def create_embeddings_with_model(chunks, embeddings_model):
 
 @task
 def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existing):
-    """Save vector embeddings to Pinecone with metadata and page content"""
-    
+    """
+    Save vector embeddings to Pinecone with metadata and page content.
+    Args:
+        pc: Pinecone client object
+        chunks: List of Document objects
+        embeddings: List of embedding vectors
+        index_name: Name of Pinecone index
+        clear_existing: Boolean to clear existing data
+    Returns:
+        Success message string
+    """
     try:
         existing_indexes = pc.list_indexes().names()
         
-        # Clear existing data if requested (recommended for stock data)
         if index_name in existing_indexes and clear_existing:
             print("Clearing existing data from index...")
             index = pc.Index(index_name)
@@ -156,9 +186,7 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
                 'Company_Name': chunk.metadata.get('Company_Name'),
                 'Sector': chunk.metadata.get('Sector'),
                 'Industry': chunk.metadata.get('Industry'),
-
                 'content': chunk.page_content,
-                
                 'chunk_index': i
             }
             
@@ -182,24 +210,22 @@ def save_embeddings_to_pinecone(pc, chunks, embeddings, index_name, clear_existi
         raise
 
 @task
-def get_multiple_stocks_data(tickers: list, period: str = "5y") -> pd.DataFrame:
+def get_multiple_stocks_data(tickers):
     """
     Get stock data for multiple tickers and return as DataFrame.
-    
     Args:
-        tickers (list): List of ticker symbols
-        period (str): Historical data period
-        
+        tickers: List of ticker symbols
+        period: Historical data period
     Returns:
-        pd.DataFrame: DataFrame with stock data for all tickers
+        DataFrame with stock data for all tickers
     """
-    
     all_data = []
 
     for ticker in (tickers):
         try:
-            stock_data = get_stock_data(ticker) 
+            stock_data = get_stock_data(ticker)
             if stock_data is not None:
+                tqdm.write(f'Processing {ticker}')
                 all_data.append(stock_data)
             else:
                 tqdm.write(f"Warning: No data retrieved for {ticker}")
@@ -209,7 +235,6 @@ def get_multiple_stocks_data(tickers: list, period: str = "5y") -> pd.DataFrame:
             
     df = pd.DataFrame(all_data)
 
-    # Clean up Missing Values
     df['Dividend_Yield'] = df['Dividend_Yield'].fillna(0)
     df['Sector'] = df['Sector'].fillna('Unknown')
     df['Industry'] = df['Industry'].fillna('Unknown') 
@@ -217,10 +242,21 @@ def get_multiple_stocks_data(tickers: list, period: str = "5y") -> pd.DataFrame:
     df['Business_Summary'] = df['Business_Summary'].fillna('No description available')
     df = df.fillna(0)
 
+    today_date = datetime.now().date().strftime("%Y-%m-%d")
+    df['Update_Date'] = today_date
+
     return df.sort_values('Market_Cap', ascending=False, na_position='last')
 
 @task
 def save_to_bigquery(df, credentials):
+    """
+    Save DataFrame to BigQuery table.
+    Args:
+        df: DataFrame to save
+        credentials: GCP credentials object
+    Returns:
+        Success message string
+    """
     client = bigquery.Client(credentials=credentials, project=project_id)
     
     table_id_full = f"{project_id}.{dataset_id}.{table_id}"
@@ -233,8 +269,26 @@ def save_to_bigquery(df, credentials):
 
     return f"Successfully Updated Stock Data in BigQuery {datetime.now().strftime('%Y-%m-%d')}"
 
-@flow(log_prints=True, name="data-processing-pipeline")
+@task
+def sentiment_analysis(df, api_key, base_url):
+    """
+    Perform sentiment analysis on stock data.
+    Args:
+        df: DataFrame containing stock data
+    Returns:
+        DataFrame with sentiment analysis results added
+    """
+    tickers = df['Ticker'].unique().tolist()
+    df_sentiment = analyze_multiple_stocks(tickers, api_key, base_url)
+    df = pd.merge(df, df_sentiment, how='left', on='Ticker')
+    return df.sort_values(['Market_Cap'], ascending=False).reset_index(drop=True)
+
+@flow(log_prints=True, name="data-processing-pipeline-flow")
 def data_processing_flow():
+    """
+    Main data processing flow for stock data pipeline.
+    Orchestrates the entire ETL process from data ingestion to vector storage.
+    """
 
     print("Loading GCP credentials")
     credentials = setup_gcp_credentials(prefect_gcp_service_account_key)
@@ -251,6 +305,9 @@ def data_processing_flow():
     print("Create Dataset")
     df_enriched_stock_data = get_multiple_stocks_data(stock_tickers)
 
+    print("Add Sentiment")
+    df_enriched_stock_data = sentiment_analysis(df_enriched_stock_data, Secret.load(prefect_newsapi_key).get(), sentiment_base_url)
+    
     print("Saving stock data to BigQuery")
     bigquery_result = save_to_bigquery(df_enriched_stock_data, credentials)
     
