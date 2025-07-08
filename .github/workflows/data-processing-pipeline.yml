@@ -3,7 +3,7 @@ name: Data Processing Pipeline (Prefect Flow)
 on: 
   push:
     branches:
-      - dev
+      - main
   workflow_dispatch:
 jobs:
   deploy:

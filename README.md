@@ -2,7 +2,7 @@
 
 ## Summary
 
-An intelligent stock portfolio recommendation system powered by RAG (Retrieval-Augmented Generation) technology and large language models. This application combines real-time financial data with advanced AI to provide personalized investment insights and portfolio recommendations through an intuitive web interface.
+A stock recommendation system powered by RAG (Retrieval-Augmented Generation) technology and large language models. This application combines real-time financial data with content-based recommendation, sentiment analysis and financial metrics to provide personalized investment insights and portfolio recommendations through an intuitive web interface.
 
 The system utilizes a batch processing pipeline to continuously update stock data and embeddings, enabling semantic search capabilities that help users discover relevant investment opportunities based on natural language queries.
 
