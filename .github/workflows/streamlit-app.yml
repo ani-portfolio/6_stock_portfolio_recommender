@@ -3,7 +3,7 @@ name: Streamlit App (GCP Cloud Run)
 on: 
   push:
     branches:
-      - main
+      - dev
   workflow_dispatch:
 
 env:
