@@ -262,19 +262,35 @@ def create_sample_queries():
     """
     Create sample query buttons for users.
     """
+    recommendation_queries = [
+        "Suggest 5 stocks similar to Apple with high return",
+        "Recommend 3 stocks with high return in the financial industry",
+        # "What is Apple's return in 2024?",
+        # "Which stocks have the highest annualized returns in 2024?",
+        # "Find stocks with a P/E ratio below 20 and annualized return above 10%",
+        # "Find undervalued stocks trading below their 52-week high"
+    ]
+
     sample_queries = [
         "What is NVIDIA's annualized return?",
         "What is Apple's return in 2024?",
-        "Which stocks have the highest annualized returns in 2024?",
-        "Show me dividend-paying stocks with low volatility",
-        "Find stocks with a P/E ratio below 20 and annualized return above 10%",
-        "Find undervalued stocks trading below their 52-week high"
+        # "Which stocks have the highest annualized returns in 2024?",
+        # "Find stocks with a P/E ratio below 20 and annualized return above 10%",
+        # "Find undervalued stocks trading below their 52-week high"
     ]
-    
+
+    st.markdown("**Recommendation Queries**")
+    cols = st.columns(2)
+    for i, recommend_query in enumerate(recommendation_queries):
+        col = cols[i % 2]
+        if col.button(recommend_query, key=f"recommend_{i}", use_container_width=True):
+            st.session_state.selected_query = recommend_query
+            st.rerun()
+
     st.markdown("**Sample Queries**")
     cols = st.columns(2)
-    for i, query in enumerate(sample_queries):
-        col = cols[i % 2]
-        if col.button(query, key=f"sample_{i}", use_container_width=True):
-            st.session_state.selected_query = query
+    for j, sample_query in enumerate(sample_queries):
+        col = cols[j % 2]
+        if col.button(sample_query, key=f"sample_{j}", use_container_width=True):
+            st.session_state.selected_query = sample_query
             st.rerun()

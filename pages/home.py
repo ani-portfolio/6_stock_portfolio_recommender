@@ -4,6 +4,10 @@ import sys
 sys.path.append('..')
 from src.parameters import *
 from src.rag import *
+from src.query_router import *
+from src.data_ingestion import *
+from src.recommender import *
+
 
 st.markdown("""
 <style>
@@ -64,14 +68,30 @@ with col2:
 
 create_sample_queries()
 
+# query_route
+result = router(user_query)
+
 if user_query and (search_button or user_query):
     with st.spinner("🔍 Analyzing stock data..."):
         try:
             index_name = pinecone_index_name
             
-            response = rag_query_stocks(query=user_query, top_k=10, groq_llm_model=groq_llm_model,
-                                        huggingface_embeddings_model=huggingface_embeddings_model,
-                                        pinecone_index_name=index_name)
+            if result['route'] == 'semantic_search':
+                response = rag_query_stocks(query=user_query, top_k=10, groq_llm_model=groq_llm_model,
+                                            huggingface_embeddings_model=huggingface_embeddings_model,
+                                            pinecone_index_name=index_name)
+                
+            if result['route'] == 'recommender':
+                df_stock_data = load_table_from_bigquery(dataset_id, table_id, project_id)
+                non_numerical_columns = ['Ticker', 'Company_Name', 'Sector', 'Industry', 'Country', 'Business_Summary', 'Sentiment', 'Update_Date']
+                numerical_columns = df_stock_data.drop(non_numerical_columns, axis=1).columns.tolist()
+
+                response = recommend_stocks_from_query(df=df_stock_data,
+                                                              user_query=user_query, 
+                                                              numerical_columns=numerical_columns,
+                                                              non_numerical_columns=non_numerical_columns,
+                                                              top_n=5,
+                                                              groq_api_key=get_api_key("GROQ_API_KEY"))
             
             if response['success']:
                 st.success("Analysis Complete")
