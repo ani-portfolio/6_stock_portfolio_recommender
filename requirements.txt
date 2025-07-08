@@ -30,6 +30,7 @@ colorama==0.4.6
 comm==0.2.2
 contourpy==1.3.2
 coolname==2.2.0
+croniter==5.0.1
 cryptography==45.0.4
 curl_cffi==0.11.4
 cycler==0.12.1
@@ -157,7 +158,7 @@ pinecone-plugin-assistant==1.7.0
 pinecone-plugin-interface==0.0.7
 platformdirs==4.3.8
 plotly==6.1.2
-prefect==3.4.6
+prefect==3.4.7
 prometheus_client==0.22.1
 prompt_toolkit==3.0.51
 propcache==0.3.2
@@ -183,7 +184,7 @@ python-dotenv==1.1.0
 python-json-logger==3.3.0
 python-slugify==8.0.4
 python-socks==2.7.1
-pytz==2025.2
+pytz==2024.2
 PyYAML==6.0.2
 pyzmq==27.0.0
 readchar==4.2.1
@@ -194,7 +195,7 @@ requests-oauthlib==2.0.0
 requests-toolbelt==1.0.0
 rfc3339-validator==0.1.4
 rfc3986-validator==0.1.1
-rich==14.0.0
+rich==13.9.4
 rpds-py==0.25.1
 rsa==4.9.1
 ruamel.yaml==0.18.14
@@ -202,6 +203,7 @@ ruamel.yaml.clib==0.2.12
 safetensors==0.5.3
 scikit-learn==1.7.0
 scipy==1.15.3
+semver==3.0.4
 Send2Trash==1.8.3
 sentence-transformers==4.1.0
 shellingham==1.5.4
@@ -226,7 +228,7 @@ tornado==6.5.1
 tqdm==4.67.1
 traitlets==5.14.3
 transformers==4.52.4
-typer==0.16.0
+typer==0.13.1
 types-python-dateutil==2.9.0.20250516
 typing-inspect==0.9.0
 typing-inspection==0.4.1
@@ -243,7 +245,7 @@ wcwidth==0.2.13
 webcolors==24.11.1
 webencodings==0.5.1
 websocket-client==1.8.0
-websockets==15.0.1
+websockets==13.1
 widgetsnbextension==4.0.14
 yarl==1.20.1
 yfinance==0.2.63

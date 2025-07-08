@@ -1,16 +1,7 @@
 import streamlit as st
 
-# --- Documentation Page ---
-# st.title("DOCUMENTATION")
 st.markdown("<h1 style='text-align: center; color: black;'>DOCUMENTATION</h1>", unsafe_allow_html=True)
-# st.markdown("""
-# **Cloud Infrastructure • AI/ML Services • Data Pipeline • CI/CD**  
-# """)
 
-# st.markdown("---")
-# st.markdown("## 🤖 AI/ML Technologies")
-
-# Create three columns for AI/ML technologies
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -49,10 +40,6 @@ with col3:
     - [Groq API Docs](https://console.groq.com/docs/quickstart)
     """)
 
-# st.markdown("---")
-# st.markdown("## ☁️ Google Cloud Platform")
-
-# GCP Services
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -91,10 +78,6 @@ with col3:
     - [Security Features](https://cloud.google.com/artifact-registry/docs/analysis)
     """)
 
-# st.markdown("---")
-# st.markdown("## 🔄 Development & Deployment")
-
-# Development tools
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -133,10 +116,6 @@ with col3:
     - [Cloud Platform](https://docs.prefect.io/latest/cloud/)
     """)
 
-# st.markdown("---")
-# st.markdown("## 🌐 Data & Interface")
-
-# Data and UI
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -167,7 +146,6 @@ with col2:
 
 st.divider()
 
-# --- Footer ---
 st.markdown("""
 <div style='text-align: center; color: #666;'>
 <p>📚 Complete documentation for the RAG-LLM Stock Portfolio Recommender System</p>
