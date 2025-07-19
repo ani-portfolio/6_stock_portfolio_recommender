@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FastAPI App{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .glass {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .glass-light {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-red-600 via-black to-blue-800">
+    <nav class="sticky top-0 z-50 glass border-b border-red-400/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <h2 class="text-2xl font-bold text-red-400">FastAPI App</h2>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="{% if active_tab == 'home' %}bg-red-600/40 text-white border border-red-400/50{% else %}text-blue-200 hover:bg-blue-600/20 hover:text-white{% endif %} px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Home
+                        </a>
+                        <a href="/documentation" class="{% if active_tab == 'documentation' %}bg-red-600/40 text-white border border-red-400/50{% else %}text-blue-200 hover:bg-blue-600/20 hover:text-white{% endif %} px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Documentation
+                        </a>
+                        <a href="/links" class="{% if active_tab == 'links' %}bg-red-600/40 text-white border border-red-400/50{% else %}text-blue-200 hover:bg-blue-600/20 hover:text-white{% endif %} px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Links
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="min-h-[calc(100vh-8rem)] py-8">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="glass border-t border-red-400/30">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-blue-200">&copy; 2025 FastAPI App. Built with FastAPI & Tailwind CSS.</p>
+        </div>
+    </footer>
+</body>
+</html>

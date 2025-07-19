@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Documentation - FastAPI App{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 animate-fade-in">
+        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Documentation</h1>
+        <p class="text-xl text-blue-200">API documentation and guides</p>
+    </div>
+    
+    <div class="animate-slide-up">
+        <div class="glass-light rounded-2xl p-12 shadow-2xl text-center border border-red-400/30">
+            <div class="mb-6">
+                <div class="w-20 h-20 bg-red-600/40 border border-red-400/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-10 h-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-4">Test</h2>
+            <p class="text-xl text-blue-200 mb-8">This is the documentation page. Content coming soon!</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-md mx-auto">
+                <a href="/docs" class="bg-red-600/40 hover:bg-red-600/60 text-white px-6 py-3 rounded-lg transition-all duration-300 border border-red-400/50 hover:border-red-400 flex items-center justify-center space-x-2">
+                    <span>Swagger UI</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                </a>
+                <a href="/redoc" class="bg-blue-600/40 hover:bg-blue-600/60 text-white px-6 py-3 rounded-lg transition-all duration-300 border border-blue-400/50 hover:border-blue-400 flex items-center justify-center space-x-2">
+                    <span>ReDoc</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
