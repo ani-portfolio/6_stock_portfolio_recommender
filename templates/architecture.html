@@ -27,18 +27,17 @@
             left: 0;
             width: 0;
             height: 2px;
-            background-color: rgba(107, 33, 168, 0.8);
-            box-shadow: 0 4px 20px 0 rgba(107, 33, 168, 0.6);
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
             transition: width 0.3s ease;
         }
         
-        .nav-item:hover::after,
-        .nav-item.active::after {
+        .nav-item:hover::after {
             width: 100%;
         }
         
         .nav-item.active {
-            color: #6b21a8;
+            color: #000;
         }
         
         /* Ticker animation styles */
@@ -72,8 +71,8 @@
             left: 0;
             width: 0;
             height: 2px;
-            background-color: rgba(107, 33, 168, 0.8);
-            box-shadow: 0 4px 20px 0 rgba(107, 33, 168, 0.6);
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
             transition: width 0.3s ease;
         }
         
@@ -445,14 +444,14 @@
     </style>
     
 </head>
-<body class="font-sans min-h-screen" style="background: #f0f0f5;">
+<body class="font-sans min-h-screen" style="background: #E8EEEC;">
     <div class="flex flex-col h-screen">
         
-    <div class="flex justify-center py-4" style="background: #f0f0f5;">
+    <div class="flex justify-center py-4" style="background: #E8EEEC;">
         <nav class="flex">
             <a href="/" class="nav-item" id="nav-home">HOME</a>
             <a href="/risk-level" class="nav-item" id="nav-risk-level">RISK LEVEL</a>
-            <div class="nav-item">CHARTS</div>
+            <!-- <div class="nav-item">CHARTS</div> -->
             <a href="/documentation" class="nav-item" id="nav-documentation">DOCUMENTATION</a>
             <a href="/architecture" class="nav-item" id="nav-architecture">SYSTEM ARCHITECTURE</a>
             <a href="/links" class="nav-item" id="nav-links">LINKS</a>
