@@ -6,6 +6,7 @@ alembic==1.16.2
 altair==5.5.0
 annotated-types==0.7.0
 anyio==4.9.0
+appdirs==1.4.4
 appnope==0.1.4
 apprise==1.9.3
 argon2-cffi==25.1.0
@@ -35,11 +36,14 @@ cryptography==45.0.4
 curl_cffi==0.11.4
 cycler==0.12.1
 dataclasses-json==0.6.7
+datasets==4.0.0
 dateparser==1.2.1
 db-dtypes==1.4.3
 debugpy==1.8.14
 decorator==5.2.1
 defusedxml==0.7.1
+dill==0.3.8
+diskcache==5.6.3
 distro==1.9.0
 docker==7.1.0
 exceptiongroup==1.3.0
@@ -51,7 +55,7 @@ fonttools==4.58.4
 fqdn==1.5.1
 frozendict==2.4.6
 frozenlist==1.7.0
-fsspec==2025.5.1
+fsspec==2025.3.0
 gitdb==4.0.12
 GitPython==3.1.44
 google-api-core==2.25.1
@@ -73,6 +77,7 @@ h2==4.2.0
 hf-xet==1.1.4
 hpack==4.1.0
 httpcore==1.0.9
+httptools==0.6.4
 httpx==0.28.1
 httpx-sse==0.4.0
 huggingface-hub==0.33.0
@@ -89,6 +94,7 @@ isoduration==20.11.0
 jedi==0.19.2
 Jinja2==3.1.6
 jinja2-humanize-extension==0.4.0
+jiter==0.10.0
 joblib==1.5.1
 json5==0.12.0
 jsonpatch==1.33
@@ -108,10 +114,12 @@ jupyterlab_pygments==0.3.0
 jupyterlab_server==2.27.3
 jupyterlab_widgets==3.0.15
 kiwisolver==1.4.8
-langchain==0.3.25
-langchain-core==0.3.65
+langchain==0.3.26
+langchain-community==0.3.27
+langchain-core==0.3.69
 langchain-groq==0.3.2
 langchain-huggingface==0.3.0
+langchain-openai==0.3.28
 langchain-text-splitters==0.3.8
 langsmith==0.3.45
 lxml==5.4.0
@@ -127,6 +135,7 @@ mistune==3.1.3
 more-itertools==10.7.0
 mpmath==1.3.0
 multidict==6.5.0
+multiprocess==0.70.16
 multitasking==0.0.11
 mypy_extensions==1.1.0
 narwhals==1.43.1
@@ -139,6 +148,7 @@ notebook==7.4.3
 notebook_shim==0.2.4
 numpy==2.3.0
 oauthlib==3.3.0
+openai==1.97.0
 opentelemetry-api==1.34.1
 orjson==3.10.18
 overrides==7.7.0
@@ -181,11 +191,13 @@ pyparsing==3.2.3
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.0
 python-json-logger==3.3.0
+python-multipart==0.0.20
 python-slugify==8.0.4
 python-socks==2.7.1
 pytz==2024.2
 PyYAML==6.0.2
 pyzmq==27.0.0
+ragas==0.2.15
 readchar==4.2.1
 referencing==0.36.2
 regex==2024.11.6
@@ -220,6 +232,7 @@ tenacity==9.1.2
 terminado==0.18.1
 text-unidecode==1.3
 threadpoolctl==3.6.0
+tiktoken==0.9.0
 tinycss2==1.4.0
 tokenizers==0.21.1
 toml==0.10.2
@@ -240,13 +253,16 @@ uri-template==1.3.0
 urllib3==2.5.0
 uv==0.7.13
 uvicorn==0.34.3
+uvloop==0.21.0
 watchdog==6.0.0
+watchfiles==1.1.0
 wcwidth==0.2.13
 webcolors==24.11.1
 webencodings==0.5.1
 websocket-client==1.8.0
 websockets==13.1
 widgetsnbextension==4.0.14
+xxhash==3.5.0
 yarl==1.20.1
 yfinance==0.2.63
 zipp==3.23.0
