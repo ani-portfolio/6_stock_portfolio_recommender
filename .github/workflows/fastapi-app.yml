@@ -5,12 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
-
 env:
   PROJECT_ID: capable-arbor-293714
   REGION: us-central1 
-  SERVICE_NAME: fastapi-app 
-  IMAGE_REPO_NAME: fastapi-app-repo
+  SERVICE_NAME: stock-recommendation-app 
+  IMAGE_REPO_NAME: stock-recommendation-app-repo
   IMAGE_NAME: $REGION-docker.pkg.dev/$PROJECT_ID/$IMAGE_REPO_NAME/$SERVICE_NAME
 
 jobs:
