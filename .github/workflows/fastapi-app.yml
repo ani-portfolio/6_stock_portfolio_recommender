@@ -1,0 +1,61 @@
+name: FastAPI App (GCP Cloud Run)
+
+on: 
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: capable-arbor-293714
+  REGION: us-central1 
+  SERVICE_NAME: fastapi-app 
+  IMAGE_REPO_NAME: fastapi-app-repo
+  IMAGE_NAME: $REGION-docker.pkg.dev/$PROJECT_ID/$IMAGE_REPO_NAME/$SERVICE_NAME
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.RECOMMENDATION_APP_GCP_SA_KEY_DEV }}
+
+      - name: Configure Docker to use Google Artifact Registry
+        run: |
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
+      - name: Build and Push Docker Image to Artifact Registry
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }}:latest .
+          docker push ${{ env.IMAGE_NAME }}:latest
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE_NAME }}
+          image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.IMAGE_REPO_NAME }}/${{ env.SERVICE_NAME }}:latest
+          region: ${{ env.REGION }}
+          allow_unauthenticated: true
+          port: 8000 
+          memory: 2Gi
+          cpu: 1
+          env_vars: |
+            PINECONE_API_KEY=${{ secrets.PINECONE_API_KEY }}
+            GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}
+
+      - name: Show Cloud Run URL
+        run: |
+          echo "🚀 FastAPI app deployed to: ${{ steps.deploy.outputs.url }}"

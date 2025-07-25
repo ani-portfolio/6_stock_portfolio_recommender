@@ -1,0 +1,820 @@
+{
+  "summary": {
+    "total_tests": 10,
+    "start_time": "2025-07-17T22:02:32.408842",
+    "test_types": {
+      "sector_filter": 8,
+      "risk_return": 1,
+      "valuation": 1
+    },
+    "end_time": "2025-07-17T22:02:56.063002",
+    "average_score": 14.5,
+    "median_score": 12.5,
+    "min_score": 0.0,
+    "max_score": 32.5,
+    "std_score": 8.803408430829505
+  },
+  "individual_results": [
+    {
+      "test_case": {
+        "query": "What are the best Information Technology stocks for a conservative portfolio?",
+        "query_type": "sector_filter",
+        "expected_sector": "Information Technology",
+        "expected_stocks": [
+          "MSFT",
+          "NVDA",
+          "AAPL",
+          "AVGO",
+          "ORCL",
+          "PLTR",
+          "CRM",
+          "CSCO",
+          "IBM",
+          "INTU",
+          "NOW",
+          "ACN",
+          "AMD",
+          "ADBE",
+          "TXN",
+          "QCOM",
+          "PANW",
+          "AMAT",
+          "CRWD",
+          "ANET",
+          "APH",
+          "ADI",
+          "MU",
+          "LRCX",
+          "KLAC",
+          "INTC",
+          "CDNS",
+          "FTNT",
+          "DELL",
+          "SNPS",
+          "MSI",
+          "WDAY",
+          "ADSK",
+          "ROP",
+          "NXPI",
+          "TEL",
+          "GLW",
+          "FICO",
+          "CTSH",
+          "IT",
+          "MPWR",
+          "MCHP",
+          "ANSS",
+          "KEYS",
+          "GDDY",
+          "VRSN",
+          "STX",
+          "TYL",
+          "SMCI",
+          "CDW",
+          "HPQ",
+          "TDY",
+          "HPE",
+          "NTAP",
+          "PTC",
+          "JBL",
+          "WDC",
+          "GEN",
+          "ON",
+          "TRMB",
+          "FSLR",
+          "FFIV",
+          "ZBRA",
+          "TER",
+          "JNPR",
+          "AKAM",
+          "SWKS",
+          "EPAM",
+          "ENPH"
+        ],
+        "evaluation_criteria": [
+          "sector_relevance",
+          "stock_recommendations",
+          "financial_reasoning"
+        ]
+      },
+      "response": "This is a dummy response to: What are the best Information Technology stocks for a conservative portfolio?",
+      "evaluations": [
+        {
+          "metric": "sector_relevance",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not mention the Information Technology sector at all, making it completely irrelevant to the expected sector focus."
+        },
+        {
+          "metric": "stock_recommendations",
+          "score": 0.5,
+          "max_score": 5,
+          "reasoning": "Quality: 1/5, Relevance: 0.0/5, Precision: 0.00, Recall: 0.00"
+        },
+        {
+          "metric": "financial_reasoning",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        },
+        {
+          "metric": "response_completeness",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not provide any relevant information or suggestions regarding the best Information Technology stocks for a conservative portfolio, making it completely unaddressed."
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:32.409037",
+      "overall_score": 12.5
+    },
+    {
+      "test_case": {
+        "query": "What are the top 5 Health Care stocks by market cap?",
+        "query_type": "sector_filter",
+        "expected_sector": "Health Care",
+        "expected_stocks": [
+          "LLY",
+          "JNJ",
+          "ABBV",
+          "UNH",
+          "ABT",
+          "ISRG",
+          "MRK",
+          "BSX",
+          "AMGN",
+          "TMO",
+          "SYK",
+          "GILD",
+          "DHR",
+          "PFE",
+          "VRTX",
+          "MDT",
+          "BMY",
+          "HCA",
+          "MCK",
+          "ELV",
+          "CI",
+          "CVS",
+          "ZTS",
+          "COR",
+          "REGN",
+          "BDX",
+          "EW",
+          "IDXX",
+          "CAH",
+          "RMD",
+          "DXCM",
+          "GEHC",
+          "A",
+          "HUM",
+          "CNC",
+          "IQV",
+          "STE",
+          "MTD",
+          "PODD",
+          "LH",
+          "WAT",
+          "DGX",
+          "BIIB",
+          "ZBH",
+          "MOH",
+          "BAX",
+          "WST",
+          "HOLX",
+          "COO",
+          "ALGN",
+          "SOLV",
+          "INCY",
+          "UHS",
+          "RVTY",
+          "VTRS",
+          "DVA",
+          "MRNA",
+          "HSIC",
+          "TECH",
+          "CRL"
+        ],
+        "evaluation_criteria": [
+          "sector_relevance",
+          "stock_recommendations",
+          "financial_reasoning"
+        ]
+      },
+      "response": "This is a dummy response to: What are the top 5 Health Care stocks by market cap?",
+      "evaluations": [
+        {
+          "metric": "sector_relevance",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not mention the Health Care sector or provide any relevant information about top Health Care stocks by market cap, making it completely wrong for the expected sector."
+        },
+        {
+          "metric": "stock_recommendations",
+          "score": 0.5,
+          "max_score": 5,
+          "reasoning": "Quality: 1/5, Relevance: 0.0/5, Precision: 0.00, Recall: 0.00"
+        },
+        {
+          "metric": "financial_reasoning",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        },
+        {
+          "metric": "response_completeness",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not provide any information about the top 5 Health Care stocks by market cap, and instead, explicitly states that it is a dummy response, indicating that it does not address the query at all."
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:34.252506",
+      "overall_score": 12.5
+    },
+    {
+      "test_case": {
+        "query": "Find undervalued Communication Services stocks with strong performance",
+        "query_type": "sector_filter",
+        "expected_sector": "Communication Services",
+        "expected_stocks": [
+          "GOOG",
+          "GOOGL",
+          "META",
+          "NFLX",
+          "TMUS",
+          "DIS",
+          "T",
+          "VZ",
+          "CMCSA",
+          "CHTR",
+          "TTWO",
+          "EA",
+          "LYV",
+          "WBD",
+          "FOXA",
+          "FOX",
+          "NWSA",
+          "NWS",
+          "OMC",
+          "TKO",
+          "IPG",
+          "PARA",
+          "MTCH"
+        ],
+        "evaluation_criteria": [
+          "sector_relevance",
+          "stock_recommendations",
+          "financial_reasoning"
+        ]
+      },
+      "response": "This is a dummy response to: Find undervalued Communication Services stocks with strong performance",
+      "evaluations": [
+        {
+          "metric": "sector_relevance",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not mention the Communication Services sector at all, making it completely irrelevant to the expected sector focus."
+        },
+        {
+          "metric": "stock_recommendations",
+          "score": 0.5,
+          "max_score": 5,
+          "reasoning": "Quality: 1/5, Relevance: 0.0/5, Precision: 0.00, Recall: 0.00"
+        },
+        {
+          "metric": "financial_reasoning",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        },
+        {
+          "metric": "response_completeness",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:35.943488",
+      "overall_score": 7.5
+    },
+    {
+      "test_case": {
+        "query": "What are the top 5 Real Estate stocks by market cap?",
+        "query_type": "sector_filter",
+        "expected_sector": "Real Estate",
+        "expected_stocks": [
+          "WELL",
+          "PLD",
+          "AMT",
+          "EQIX",
+          "SPG",
+          "DLR",
+          "PSA",
+          "O",
+          "CCI",
+          "CBRE",
+          "VICI",
+          "EXR",
+          "CSGP",
+          "AVB",
+          "IRM",
+          "VTR",
+          "EQR",
+          "SBAC",
+          "INVH",
+          "ESS",
+          "MAA",
+          "WY",
+          "UDR",
+          "KIM",
+          "REG",
+          "CPT",
+          "ARE",
+          "DOC",
+          "BXP",
+          "HST",
+          "FRT"
+        ],
+        "evaluation_criteria": [
+          "sector_relevance",
+          "stock_recommendations",
+          "financial_reasoning"
+        ]
+      },
+      "response": "This is a dummy response to: What are the top 5 Real Estate stocks by market cap?",
+      "evaluations": [
+        {
+          "metric": "sector_relevance",
+          "score": 4,
+          "max_score": 5,
+          "reasoning": "The response is a direct answer to a question about the Real Estate sector, specifically asking for the top 5 Real Estate stocks by market cap, which indicates a clear focus on the Real Estate sector. However, the response itself is described as a 'dummy response', implying it does not provide actual information or analysis about the sector, which prevents it from being a perfect sector focus with detailed sector analysis."
+        },
+        {
+          "metric": "stock_recommendations",
+          "score": 0.5,
+          "max_score": 5,
+          "reasoning": "Quality: 1/5, Relevance: 0.0/5, Precision: 0.00, Recall: 0.00"
+        },
+        {
+          "metric": "financial_reasoning",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        },
+        {
+          "metric": "response_completeness",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:37.736994",
+      "overall_score": 22.5
+    },
+    {
+      "test_case": {
+        "query": "Which Materials stocks have the highest dividend yields?",
+        "query_type": "sector_filter",
+        "expected_sector": "Materials",
+        "expected_stocks": [
+          "LIN",
+          "SHW",
+          "ECL",
+          "APD",
+          "NEM",
+          "FCX",
+          "CTVA",
+          "VMC",
+          "MLM",
+          "DD",
+          "IP",
+          "NUE",
+          "PPG",
+          "SW",
+          "AMCR",
+          "DOW",
+          "IFF",
+          "STLD",
+          "LYB",
+          "PKG",
+          "BALL",
+          "CF",
+          "AVY",
+          "MOS",
+          "EMN",
+          "ALB"
+        ],
+        "evaluation_criteria": [
+          "sector_relevance",
+          "stock_recommendations",
+          "financial_reasoning"
+        ]
+      },
+      "response": "This is a dummy response to: Which Materials stocks have the highest dividend yields?",
+      "evaluations": [
+        {
+          "metric": "sector_relevance",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not mention the Materials sector or provide any relevant information about Materials stocks with high dividend yields, making it completely irrelevant to the expected sector."
+        },
+        {
+          "metric": "stock_recommendations",
+          "score": 0.5,
+          "max_score": 5,
+          "reasoning": "Quality: 1/5, Relevance: 0.0/5, Precision: 0.00, Recall: 0.00"
+        },
+        {
+          "metric": "financial_reasoning",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        },
+        {
+          "metric": "response_completeness",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not provide any relevant information or data regarding Materials stocks with the highest dividend yields, making it completely unaddressed."
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:39.866646",
+      "overall_score": 12.5
+    },
+    {
+      "test_case": {
+        "query": "Show me high-growth Consumer Staples companies with good fundamentals",
+        "query_type": "sector_filter",
+        "expected_sector": "Consumer Staples",
+        "expected_stocks": [
+          "WMT",
+          "COST",
+          "PG",
+          "KO",
+          "PM",
+          "PEP",
+          "MO",
+          "MDLZ",
+          "CL",
+          "MNST",
+          "KMB",
+          "KVUE",
+          "KDP",
+          "KR",
+          "TGT",
+          "SYY",
+          "HSY",
+          "STZ",
+          "KHC",
+          "GIS",
+          "K",
+          "CHD",
+          "EL",
+          "ADM",
+          "DG",
+          "TSN",
+          "MKC",
+          "DLTR",
+          "HRL",
+          "CLX",
+          "SJM",
+          "CAG",
+          "TAP",
+          "BG",
+          "CPB",
+          "WBA",
+          "LW",
+          "BF.B"
+        ],
+        "evaluation_criteria": [
+          "sector_relevance",
+          "stock_recommendations",
+          "financial_reasoning"
+        ]
+      },
+      "response": "This is a dummy response to: Show me high-growth Consumer Staples companies with good fundamentals",
+      "evaluations": [
+        {
+          "metric": "sector_relevance",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not mention the Consumer Staples sector at all, let alone provide high-growth companies with good fundamentals within that sector, making it completely irrelevant to the expected sector."
+        },
+        {
+          "metric": "stock_recommendations",
+          "score": 0.5,
+          "max_score": 5,
+          "reasoning": "Quality: 1/5, Relevance: 0.0/5, Precision: 0.00, Recall: 0.00"
+        },
+        {
+          "metric": "financial_reasoning",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        },
+        {
+          "metric": "response_completeness",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not provide any relevant information or data regarding high-growth Consumer Staples companies with good fundamentals, and instead, simply states that it is a dummy response to the query."
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:41.548795",
+      "overall_score": 12.5
+    },
+    {
+      "test_case": {
+        "query": "What are the top 5 Financials stocks by market cap?",
+        "query_type": "sector_filter",
+        "expected_sector": "Financials",
+        "expected_stocks": [
+          "JPM",
+          "V",
+          "MA",
+          "BAC",
+          "WFC",
+          "AXP",
+          "MS",
+          "GS",
+          "BX",
+          "PGR",
+          "SCHW",
+          "SPGI",
+          "BLK",
+          "C",
+          "COF",
+          "CB",
+          "MMC",
+          "KKR",
+          "CME",
+          "ICE",
+          "FI",
+          "AJG",
+          "MCO",
+          "AON",
+          "APO",
+          "PNC",
+          "PYPL",
+          "USB",
+          "BK",
+          "COIN",
+          "TRV",
+          "AFL",
+          "ALL",
+          "MET",
+          "TFC",
+          "AIG",
+          "AMP",
+          "NDAQ",
+          "MSCI",
+          "FIS",
+          "HIG",
+          "PRU",
+          "ACGL",
+          "BRO",
+          "WTW",
+          "RJF",
+          "MTB",
+          "WRB",
+          "STT",
+          "FITB",
+          "CBOE",
+          "CINF",
+          "CPAY",
+          "HBAN",
+          "SYF",
+          "NTRS",
+          "TROW",
+          "RF",
+          "ERIE",
+          "L",
+          "GPN",
+          "CFG",
+          "PFG",
+          "FDS",
+          "KEY",
+          "EG",
+          "JKHY",
+          "BEN",
+          "AIZ",
+          "GL",
+          "MKTX",
+          "IVZ",
+          "BRK.B"
+        ],
+        "evaluation_criteria": [
+          "sector_relevance",
+          "stock_recommendations",
+          "financial_reasoning"
+        ]
+      },
+      "response": "This is a dummy response to: What are the top 5 Financials stocks by market cap?",
+      "evaluations": [
+        {
+          "metric": "sector_relevance",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not mention the Financials sector or provide any relevant information about the top 5 Financials stocks by market cap, it is a generic dummy response."
+        },
+        {
+          "metric": "stock_recommendations",
+          "score": 0.5,
+          "max_score": 5,
+          "reasoning": "Quality: 1/5, Relevance: 0.0/5, Precision: 0.00, Recall: 0.00"
+        },
+        {
+          "metric": "financial_reasoning",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        },
+        {
+          "metric": "response_completeness",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not provide any information about the top 5 Financials stocks by market cap, and instead, is a placeholder indicating that it's a dummy response, thus failing to address the query altogether."
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:43.240258",
+      "overall_score": 12.5
+    },
+    {
+      "test_case": {
+        "query": "Which Information Technology stocks have the highest dividend yields?",
+        "query_type": "sector_filter",
+        "expected_sector": "Information Technology",
+        "expected_stocks": [
+          "MSFT",
+          "NVDA",
+          "AAPL",
+          "AVGO",
+          "ORCL",
+          "PLTR",
+          "CRM",
+          "CSCO",
+          "IBM",
+          "INTU",
+          "NOW",
+          "ACN",
+          "AMD",
+          "ADBE",
+          "TXN",
+          "QCOM",
+          "PANW",
+          "AMAT",
+          "CRWD",
+          "ANET",
+          "APH",
+          "ADI",
+          "MU",
+          "LRCX",
+          "KLAC",
+          "INTC",
+          "CDNS",
+          "FTNT",
+          "DELL",
+          "SNPS",
+          "MSI",
+          "WDAY",
+          "ADSK",
+          "ROP",
+          "NXPI",
+          "TEL",
+          "GLW",
+          "FICO",
+          "CTSH",
+          "IT",
+          "MPWR",
+          "MCHP",
+          "ANSS",
+          "KEYS",
+          "GDDY",
+          "VRSN",
+          "STX",
+          "TYL",
+          "SMCI",
+          "CDW",
+          "HPQ",
+          "TDY",
+          "HPE",
+          "NTAP",
+          "PTC",
+          "JBL",
+          "WDC",
+          "GEN",
+          "ON",
+          "TRMB",
+          "FSLR",
+          "FFIV",
+          "ZBRA",
+          "TER",
+          "JNPR",
+          "AKAM",
+          "SWKS",
+          "EPAM",
+          "ENPH"
+        ],
+        "evaluation_criteria": [
+          "sector_relevance",
+          "stock_recommendations",
+          "financial_reasoning"
+        ]
+      },
+      "response": "This is a dummy response to: Which Information Technology stocks have the highest dividend yields?",
+      "evaluations": [
+        {
+          "metric": "sector_relevance",
+          "score": 5,
+          "max_score": 5,
+          "reasoning": "The response is a direct answer to a question about the Information Technology sector, implying a perfect focus on the specified sector, even though the actual content is a placeholder. The question itself explicitly mentions the Information Technology sector, and the response is framed as a direct response to that question, indicating that the content, if it were not a placeholder, would be about Information Technology stocks with the highest dividend yields."
+        },
+        {
+          "metric": "stock_recommendations",
+          "score": 0.5,
+          "max_score": 5,
+          "reasoning": "Quality: 1/5, Relevance: 0.0/5, Precision: 0.00, Recall: 0.00"
+        },
+        {
+          "metric": "financial_reasoning",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        },
+        {
+          "metric": "response_completeness",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not provide any relevant information or data regarding Information Technology stocks with the highest dividend yields, making it completely unaddressed."
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:44.895847",
+      "overall_score": 32.5
+    },
+    {
+      "test_case": {
+        "query": "Show me stocks with low volatility and positive YTD returns",
+        "query_type": "risk_return",
+        "filter_condition": "<function generate_performance_queries.<locals>.<lambda> at 0x11b0d5ee0>",
+        "evaluation_criteria": [
+          "risk_assessment",
+          "return_analysis",
+          "portfolio_suitability"
+        ]
+      },
+      "response": "This is a dummy response to: Show me stocks with low volatility and positive YTD returns",
+      "evaluations": [
+        {
+          "metric": "response_completeness",
+          "score": 0,
+          "max_score": 5,
+          "reasoning": "Failed to parse evaluation response"
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:50.945878",
+      "overall_score": 0.0
+    },
+    {
+      "test_case": {
+        "query": "What are the best value stocks with low P/E ratios under 15?",
+        "query_type": "valuation",
+        "filter_condition": "<function generate_performance_queries.<locals>.<lambda> at 0x11b0d5e40>",
+        "evaluation_criteria": [
+          "valuation_analysis",
+          "value_reasoning",
+          "pe_accuracy"
+        ]
+      },
+      "response": "This is a dummy response to: What are the best value stocks with low P/E ratios under 15?",
+      "evaluations": [
+        {
+          "metric": "response_completeness",
+          "score": 1,
+          "max_score": 5,
+          "reasoning": "The response does not provide any relevant information or answer to the query about the best value stocks with low P/E ratios under 15, making it completely unaddressed."
+        }
+      ],
+      "timestamp": "2025-07-17T22:02:53.508667",
+      "overall_score": 20.0
+    }
+  ],
+  "aggregate_metrics": {
+    "sector_relevance": {
+      "average": 37.5,
+      "count": 8,
+      "std": 32.84161123592185
+    },
+    "stock_recommendations": {
+      "average": 10.0,
+      "count": 8,
+      "std": 0.0
+    },
+    "financial_reasoning": {
+      "average": 0.0,
+      "count": 8,
+      "std": 0.0
+    },
+    "response_completeness": {
+      "average": 14.0,
+      "count": 10,
+      "std": 9.66091783079296
+    }
+  }
+}
