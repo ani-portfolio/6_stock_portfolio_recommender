@@ -52,7 +52,7 @@
             width: 80%;
             max-width: 300px;
             height: 100vh;
-            background: #E8EEEC;
+            background: #FAFAFA;
             z-index: 1000;
             transition: left 0.3s ease;
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
@@ -223,11 +223,11 @@
     </style>
     
 </head>
-<body class="font-sans min-h-screen" style="background: #E8EEEC;">
+<body class="font-sans min-h-screen" style="background: #FAFAFA;">
     <div class="flex flex-col h-screen">
         
     <!-- Desktop Navigation -->
-    <div class="desktop-nav flex justify-center py-4" style="background: #E8EEEC;">
+    <div class="desktop-nav flex justify-center py-4" style="background: #FAFAFA;">
         <nav class="flex">
             <a href="/" class="nav-item" id="nav-home">HOME</a>
             <a href="/risk-level" class="nav-item" id="nav-risk-level">RISK LEVEL</a>
@@ -238,7 +238,7 @@
     </div>
 
     <!-- Mobile Navigation -->
-    <div class="mobile-nav" style="background: #E8EEEC;">
+    <div class="mobile-nav" style="background: #FAFAFA;">
         <div class="flex items-center">
         </div>
         <button class="burger-btn" id="burgerBtn">
@@ -363,14 +363,22 @@
             // Load GitHub image
             const githubCard = document.getElementById('github-card');
             githubCard.innerHTML = `
-                <a href="https://github.com/ani-portfolio/6_stock_portfolio_recommender" target="_blank" style="display: block; width: 100%; text-decoration: none;">
-                    <img src="media/github.png?v=${timestamp}" 
-                         alt="GitHub - Stock Recommender System" 
-                         class="link-tile-image" 
-                         style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 8px;" 
-                         onerror="this.onerror=null; this.parentNode.innerHTML=getErrorHTML('GitHub', 'github.png', '📂');">
-                    <div style="text-align: center; color: black; padding: 4px; font-weight: 600; font-size: 1rem;">
-                        GITHUB
+                <a href="https://github.com/ani-portfolio/6_stock_portfolio_recommender" target="_blank" style="display: block; width: 100%; text-decoration: none; position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.15); transition: all 0.3s ease;" 
+                   onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.2)'"
+                   onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.15)'">
+                    <div style="position: relative; width: 100%; height: 280px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 20px; overflow: hidden;">
+                        <img src="media/github.png?v=${timestamp}" 
+                             alt="GitHub - Stock Recommender System" 
+                             class="link-tile-image" 
+                             style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;" 
+                             onerror="this.style.display='none'; this.parentNode.style.background='linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)';">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);"></div>
+                        <div style="position: absolute; top: 20px; left: 20px; color: white; text-align: left;">
+                            <div style="font-size: 0.95rem; font-weight: 500; color: rgba(255,255,255,0.9); text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Stock Recommendation System</div>
+                        </div>
+                        <div style="position: absolute; bottom: 20px; left: 20px; color: white; text-align: left;">
+                            <div style="font-size: 2.8rem; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">GitHub</div>
+                        </div>
                     </div>
                 </a>
             `;
@@ -378,14 +386,22 @@
             // Load Portfolio image
             const portfolioCard = document.getElementById('portfolio-card');
             portfolioCard.innerHTML = `
-                <a href="https://www.datascienceportfol.io/ani_dharmarajan" target="_blank" style="display: block; width: 100%; text-decoration: none;">
-                    <img src="media/portfolio.png?v=${timestamp}" 
-                         alt="Portfolio - View My Portfolio" 
-                         class="link-tile-image" 
-                         style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 8px;"
-                         onerror="this.onerror=null; this.parentNode.innerHTML=getErrorHTML('Portfolio', 'portfolio.png', '🌟');">
-                    <div style="text-align: center; color: black; padding: 4px; font-weight: 600; font-size: 1rem;">
-                        PORTFOLIO
+                <a href="https://www.datascienceportfol.io/ani_dharmarajan" target="_blank" style="display: block; width: 100%; text-decoration: none; position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.15); transition: all 0.3s ease;"
+                   onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.2)'"
+                   onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.15)'">
+                    <div style="position: relative; width: 100%; height: 280px; background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); border-radius: 20px; overflow: hidden;">
+                        <img src="media/portfolio.png?v=${timestamp}" 
+                             alt="Portfolio - View My Portfolio" 
+                             class="link-tile-image" 
+                             style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;"
+                             onerror="this.style.display='none'; this.parentNode.style.background='linear-gradient(135deg, #dc2626 0%, #ef4444 100%)';">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);"></div>
+                        <div style="position: absolute; top: 20px; left: 20px; color: white; text-align: left;">
+                            <div style="font-size: 0.95rem; font-weight: 500; color: rgba(255,255,255,0.9); text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Machine Learning Projects</div>
+                        </div>
+                        <div style="position: absolute; bottom: 20px; left: 20px; color: white; text-align: left;">
+                            <div style="font-size: 2.8rem; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">Portfolio</div>
+                        </div>
                     </div>
                 </a>
             `;
@@ -393,14 +409,22 @@
             // Load LinkedIn image
             const linkedinCard = document.getElementById('linkedin-card');
             linkedinCard.innerHTML = `
-                <a href="https://www.linkedin.com/in/ani-dharmarajan/?originalSubdomain=ca" target="_blank" style="display: block; width: 100%; text-decoration: none;">
-                    <img src="media/linkedin.png?v=${timestamp}" 
-                         alt="LinkedIn - Connect with me" 
-                         class="link-tile-image" 
-                         style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 8px;"
-                         onerror="this.onerror=null; this.parentNode.innerHTML=getErrorHTML('LinkedIn', 'linkedin.png', '🤝');">
-                    <div style="text-align: center; color: black; padding: 4px; font-weight: 600; font-size: 1rem;">
-                        LINKEDIN
+                <a href="https://www.linkedin.com/in/ani-dharmarajan/?originalSubdomain=ca" target="_blank" style="display: block; width: 100%; text-decoration: none; position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.15); transition: all 0.3s ease;"
+                   onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.2)'"
+                   onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.15)'">
+                    <div style="position: relative; width: 100%; height: 280px; background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); border-radius: 20px; overflow: hidden;">
+                        <img src="media/linkedin.png?v=${timestamp}" 
+                             alt="LinkedIn - Connect with me" 
+                             class="link-tile-image" 
+                             style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;"
+                             onerror="this.style.display='none'; this.parentNode.style.background='linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)';">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);"></div>
+                        <div style="position: absolute; top: 20px; left: 20px; color: white; text-align: left;">
+                            <div style="font-size: 0.95rem; font-weight: 500; color: rgba(255,255,255,0.9); text-shadow: 0 1px 2px rgba(0,0,0,0.5);">Connect</div>
+                        </div>
+                        <div style="position: absolute; bottom: 20px; left: 20px; color: white; text-align: left;">
+                            <div style="font-size: 2.8rem; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">LinkedIn</div>
+                        </div>
                     </div>
                 </a>
             `;
