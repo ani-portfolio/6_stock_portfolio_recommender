@@ -39,6 +39,148 @@
         .nav-item.active {
             color: #000;
         }
+
+        /* Mobile navigation styles */
+        .mobile-nav {
+            display: none;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: #FAFAFA;
+            z-index: 1000;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-item {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background-color 0.2s ease;
+        }
+
+        .mobile-nav-item:hover {
+            background-color: #e5e7eb;
+        }
+
+        .mobile-nav-item.active {
+            background-color: #d1d5db;
+            font-weight: 600;
+        }
+
+        .burger-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+        }
+
+        .burger-line {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        .burger-btn.active .burger-line:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .burger-btn.active .burger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-btn.active .burger-line:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none !important;
+            }
+
+            .mobile-nav {
+                display: flex !important;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+            }
+
+            .burger-btn {
+                display: flex;
+            }
+
+            .nav-item {
+                padding: 0.5rem 1rem;
+            }
+
+            .links-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .doc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .architecture-components {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-item {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .link-card {
+                padding: 20px;
+            }
+
+            .component-card {
+                padding: 20px;
+            }
+
+            .doc-card {
+                padding: 20px;
+            }
+        }
         
         /* Ticker animation styles */
         .ticker-container {
@@ -444,10 +586,11 @@
     </style>
     
 </head>
-<body class="font-sans min-h-screen" style="background: #E8EEEC;">
+<body class="font-sans min-h-screen" style="background: #FAFAFA;">
     <div class="flex flex-col h-screen">
         
-    <div class="flex justify-center py-4" style="background: #E8EEEC;">
+    <!-- Desktop Navigation -->
+    <div class="desktop-nav flex justify-center py-4" style="background: #FAFAFA;">
         <nav class="flex">
             <a href="/" class="nav-item" id="nav-home">HOME</a>
             <a href="/risk-level" class="nav-item" id="nav-risk-level">RISK LEVEL</a>
@@ -455,6 +598,31 @@
             <a href="/documentation" class="nav-item" id="nav-documentation">DOCUMENTATION</a>
             <a href="/architecture" class="nav-item" id="nav-architecture">SYSTEM ARCHITECTURE</a>
             <a href="/links" class="nav-item" id="nav-links">LINKS</a>
+        </nav>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" style="background: #FAFAFA;">
+        <div class="flex items-center">
+        </div>
+        <button class="burger-btn" id="burgerBtn">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </button>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav>
+            <a href="/" class="mobile-nav-item" id="mobile-nav-home">HOME</a>
+            <a href="/risk-level" class="mobile-nav-item" id="mobile-nav-risk-level">RISK LEVEL</a>
+            <a href="/documentation" class="mobile-nav-item" id="mobile-nav-documentation">DOCUMENTATION</a>
+            <a href="/architecture" class="mobile-nav-item" id="mobile-nav-architecture">SYSTEM ARCHITECTURE</a>
+            <a href="/links" class="mobile-nav-item" id="mobile-nav-links">LINKS</a>
         </nav>
     </div>
     
@@ -490,6 +658,32 @@
     <script>
         // Set active navigation
         document.getElementById('nav-architecture').classList.add('active');
+        document.getElementById('mobile-nav-architecture').classList.add('active');
+
+        // Mobile menu functionality
+        const burgerBtn = document.getElementById('burgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function toggleMobileMenu() {
+            burgerBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            burgerBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+        }
+
+        burgerBtn.addEventListener('click', toggleMobileMenu);
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking nav items
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+            item.addEventListener('click', closeMobileMenu);
+        });
 
         // Try to load architecture image
         async function loadArchitectureImage() {
